@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Map, ScrollText, Layout, Coffee } from 'lucide-react';
 import { Tab } from './types';
@@ -58,14 +57,14 @@ const App: React.FC = () => {
 
   const headerContent = (
     <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-full overflow-hidden shrink-0 ring-2 ring-wwm-green/50">
+        <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 ring-2 ring-wwm-green/50">
           <img src="https://play-lh.googleusercontent.com/C077FpQVnL7G5O6Mowj-sWKdTjUwEWAWxOVQUcBwhHY1yOZePOoIxtlOS5Tn9kIzLoI2eU8BWZ4Nh4ufS63zBg=w240-h480-rw" alt="Where Winds Meet Logo" className="w-full h-full object-cover" />
         </div>
         <div className="flex flex-col justify-center">
-            <h1 className="text-xl sm:text-2xl font-bold tracking-wider text-stone-200 leading-none">
+            <h1 className="text-2xl sm:text-3xl font-bold tracking-wider text-stone-200 leading-none">
               Where Winds Meet <span className="text-wwm-green">Companion</span>
             </h1>
-            <span className="text-wwm-green font-medium tracking-wide mt-0.5" style={{ fontSize: '0.65rem' }}>
+            <span className="text-wwm-green font-medium tracking-wide mt-0.5" style={{ fontSize: '0.75em' }}>
               Created by Panzersmash
             </span>
         </div>
