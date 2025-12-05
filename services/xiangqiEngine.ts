@@ -1,6 +1,5 @@
+
 import { BoardState, PieceColor } from '../types';
-// @ts-ignore
-import wukongScript from '../Wukong/engine/wukong.js?raw';
 
 // Types for the engine response
 export interface EngineMove {
@@ -57,10 +56,19 @@ export const initEngine = () => {
         if (engineWorker) return;
 
         try {
-            console.log("[Wukong Engine] Initializing via bundled script (Relative Path)...");
+            console.log("[Wukong Engine] Initializing via fetch...");
             
-            // We use the bundled script content directly.
-            const engineScriptContent = wukongScript;
+            // Fetch from public directory using Vite's base path to ensure it works in subdirectories (GitHub Pages)
+            // import.meta.env.BASE_URL will be './' based on vite.config.ts
+            const scriptPath = `${import.meta.env.BASE_URL}wukong.js`;
+            
+            const response = await fetch(scriptPath);
+            
+            if (!response.ok) {
+                throw new Error(`Failed to load engine script from ${scriptPath}: ${response.status} ${response.statusText}`);
+            }
+            
+            const engineScriptContent = await response.text();
 
             const workerCode = `
                 ${engineScriptContent}
