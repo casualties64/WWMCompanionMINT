@@ -1,4 +1,5 @@
 
+
 import { BoardState, PieceColor } from '../types';
 
 // Types for the engine response
@@ -58,9 +59,9 @@ export const initEngine = () => {
         try {
             console.log("[Wukong Engine] Initializing via fetch...");
             
-            // Fetch from public directory using Vite's base path to ensure it works in subdirectories (GitHub Pages)
-            // import.meta.env.BASE_URL will be './' based on vite.config.ts
-            const scriptPath = `${import.meta.env.BASE_URL}wukong.js`;
+            // FIX: Use relative path directly. import.meta.env can be undefined in some runtime environments 
+            // if not replaced during build, causing the app to crash.
+            const scriptPath = './wukong.js';
             
             const response = await fetch(scriptPath);
             
