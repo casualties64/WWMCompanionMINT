@@ -16,31 +16,31 @@ export const GuideTab: React.FC = () => {
     { 
         id: 'PART1', 
         title: 'Part 1: F2P & Spending', 
-        url: null, // Now internal
+        url: null, 
         description: 'Maximize Jade, Coupons & Gacha'
     },
     { 
         id: 'PART2', 
         title: 'Part 2: Gameplay & UI', 
-        url: null, // Now internal
+        url: null, 
         description: 'Efficiency, UI Breakdown, Routine'
     },
     { 
         id: 'PART3', 
         title: 'Part 3: Weapon Skins', 
-        url: null, // Now internal
+        url: null, 
         description: 'Advanced Weapon Reforging'
     },
     { 
         id: 'PART4', 
         title: 'Part 4: Merchant Trading', 
-        url: null, // Now internal
+        url: null, 
         description: 'How to Make Serious Money'
     },
     { 
         id: 'PART5', 
         title: 'Part 5: Cosmetics Roadmap', 
-        url: null, // Now internal
+        url: null, 
         description: 'CN Spoilers & Planning Pulls'
     },
   ];
@@ -713,7 +713,7 @@ export const GuideTab: React.FC = () => {
     
     const renderPart3 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED A PART?</h1>
+            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION]</h1>
             <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
             <hr className="border-stone-700 my-4" />
 
@@ -725,7 +725,7 @@ export const GuideTab: React.FC = () => {
                     <li><strong>WHALE TERRITORY:</strong> This is the most expensive RNG system in the game.</li>
                     <li><strong>THE DANGER:</strong> If you spam clicks without a brain, you will lose hundreds of dollars. If you use my method, you can save 70% of the cost.</li>
                 </ol>
-                <p className="mt-2 font-bold">Target Audience for this Guide:</p>
+                <p className="mt-2 font-bold text-white">Target Audience for this Guide:</p>
                 <ul className="list-disc pl-5 space-y-1">
                     <li className="text-red-400">❌ F2P Players: Don't try it.</li>
                     <li className="text-emerald-400">✅ Low/Mid Spenders: Unlock the 5 slots and STOP. Do not chase Gold stats. OR, Aim for "3-Gold" or "4-Gold" stats.</li>
