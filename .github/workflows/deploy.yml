@@ -38,7 +38,9 @@ jobs:
           path: './dist'
 
   deploy:
-    # Removed environment key to allow default GitHub Pages behavior and avoid permission errors
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
     steps:
