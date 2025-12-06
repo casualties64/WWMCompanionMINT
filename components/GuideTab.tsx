@@ -947,7 +947,7 @@ export const GuideTab: React.FC = () => {
                 <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
                     <strong className="text-white block mb-1">Types of Goods</strong>
                     <ul className="list-disc pl-5 text-sm text-stone-400">
-                        <li><strong>Local Fluctuation:</strong> Price changes within your own world. Be careful if price rises >200%.</li>
+                        <li><strong>Local Fluctuation:</strong> Price changes within your own world. Be careful if price rises &gt;200%.</li>
                         <li><strong>Foreign Fluctuation:</strong> Price static in your world. Visit other players via Co-op to sell high.</li>
                     </ul>
                 </div>
