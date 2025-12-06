@@ -564,7 +564,6 @@ export const GuideTab: React.FC = () => {
                     <li><p><strong className="text-white">Stacking Strategy:</strong> You can stack up to <strong className="text-white">5 coupons</strong> on a single item. This means you can get a <strong className="text-emerald-400">50% discount</strong>.</p></li>
                     <li><p><strong className="text-white">Missed a day?</strong> If you miss a login, don't worry. You can earn currency from multiplayer modes to "make up" the sign-in, ensuring you get your coupons.</p></li>
                 </ul>
-                {/* Truncated rest of Part 1 here for brevity as it is duplicate content now found in Part 5 as well */}
                 <p className="mt-4 text-stone-500 italic">[See Part 5 for full details]</p>
             </div>
         );
@@ -714,169 +713,393 @@ export const GuideTab: React.FC = () => {
     
     const renderPart3 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">Part 3: Advanced Weapon Reforging (Weapon Skins)</h1>
-            <div className="bg-stone-800/50 p-6 rounded-lg border border-stone-700 text-center">
-                <p className="text-lg">This section is currently being updated with the latest Weapon Reforging mechanics from the CN server.</p>
-                <p className="mt-4 text-sm text-stone-400">Please check back later or visit the main community guides.</p>
+            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED A PART?</h1>
+            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
+            <hr className="border-stone-700 my-4" />
+
+            <h1 className="text-2xl font-bold text-red-500 mb-4 flex items-center gap-2">⚠️ STOP! READ THIS FIRST! ⚠️</h1>
+            <div className="bg-red-900/20 border border-red-800 p-4 rounded-lg space-y-2 mb-6">
+                <p>Before you touch this system, understand three things:</p>
+                <ol className="list-decimal pl-5 space-y-1">
+                    <li><strong>ZERO COMBAT POWER:</strong> Reforging weapon skins gives you 0 Stats. It is 100% cosmetic. It just makes your sword look cool and glow.</li>
+                    <li><strong>WHALE TERRITORY:</strong> This is the most expensive RNG system in the game.</li>
+                    <li><strong>THE DANGER:</strong> If you spam clicks without a brain, you will lose hundreds of dollars. If you use my method, you can save 70% of the cost.</li>
+                </ol>
+                <p className="mt-2 font-bold">Target Audience for this Guide:</p>
+                <ul className="list-disc pl-5 space-y-1">
+                    <li className="text-red-400">❌ F2P Players: Don't try it.</li>
+                    <li className="text-emerald-400">✅ Low/Mid Spenders: Unlock the 5 slots and STOP. Do not chase Gold stats. OR, Aim for "3-Gold" or "4-Gold" stats.</li>
+                    <li className="text-blue-400">🐋 Whales: Go for "5-Gold" (But read this to save money).</li>
+                </ul>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2">🎒 PART 1: THE "SECRET" MECHANIC</h1>
+            <p>The game doesn't tell you this, but the Reforging system is NOT completely random. It uses a system we call "Pseudo-RNG".</p>
+            
+            <h2 className="text-xl font-bold text-white mt-4">🧠 The "35-Roll" Rule</h2>
+            <div className="bg-stone-800/50 p-4 rounded border border-stone-700">
+                <p>Imagine a hidden counter on EACH of the 5 slots on your weapon.</p>
+                <ul className="list-disc pl-5 mt-2 space-y-1">
+                    <li>On average, a Gold (Legendary) stat appears on a specific slot once every 30 to 40 rolls.</li>
+                    <li>Let's say the average is 35.</li>
+                    <li>If you roll Slot #1 30 times and get nothing, the "Gold" is very likely to appear in the next few clicks.</li>
+                </ul>
+                <p className="mt-2 text-yellow-400 italic">This is your only advantage. If you don't count your rolls, you are gambling. If you count your rolls, you are strategizing.</p>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">📝 PART 2: PREPARATION</h1>
+            
+            <h3 className="text-lg font-bold text-white mt-4">1. Get a Notebook 📓</h3>
+            <p>I am serious. Get a piece of paper or open Excel. You need to track the "Fail Count" for each slot position (1, 2, 3, 4, 5) separately.</p>
+            <ul className="list-disc pl-5 text-stone-400 mt-2">
+                <li>Slot 1 Fails: 12</li>
+                <li>Slot 2 Fails: 30 (HOT! 🔥)</li>
+                <li>Slot 3 Fails: 5</li>
+            </ul>
+
+            <h3 className="text-lg font-bold text-white mt-4">2. Understand "Schemes" (The Money Saver)</h3>
+            <p>The game lets you save different "Schemes" (Loadouts) for the same weapon.</p>
+            <ul className="list-disc pl-5 mt-2">
+                <li><strong>Scheme A:</strong> Your Main Scheme (The one with good stats you want to keep).</li>
+                <li><strong>Scheme B:</strong> The "Trash" Scheme (An empty scheme we use to burn bad luck).</li>
+            </ul>
+            <div className="bg-stone-800/50 p-4 rounded border border-stone-700 mt-4">
+                <strong className="text-yellow-400 block mb-2">💰 THE COST DIFFERENCE:</strong>
+                <ul className="list-disc pl-5 space-y-1">
+                    <li>Rolling on Scheme B (Nothing locked): Costs 1 Stone per roll.</li>
+                    <li>Rolling on Scheme A (With 2 stats Locked): Costs 5+ Stones per roll.</li>
+                </ul>
+                <p className="mt-2 text-sm">See the logic? We want to burn the "bad rolls" on the cheap Scheme B, and only switch to Scheme A when the Gold stat is guaranteed to drop!</p>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">🛠️ PART 3: THE STRATEGY (BATTLE EXAMPLES)</h1>
+            <p>Let's simulate a real situation so even a monkey can understand this. 🐒</p>
+            
+            <h2 className="text-xl font-bold text-white mt-4">Goal: Getting 3 Golds (The Smart Choice)</h2>
+            
+            <div className="space-y-4 mt-4">
+                <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
+                    <strong className="text-white block mb-1">Step 1: The Setup</strong>
+                    <p>You roll normally until you get 2 Gold Stats on your weapon. Let's say Slot 1 and Slot 2 are Gold.</p>
+                    <ul className="list-disc pl-5 mt-2 text-sm text-stone-400">
+                        <li><strong>Problem:</strong> You want a 3rd Gold on Slot 3.</li>
+                        <li><strong>Bad Player Action:</strong> Locks Slot 1 & 2 immediately and spams roll.</li>
+                        <li><strong>Result:</strong> Each roll costs a fortune. It takes 35 rolls to get the next Gold. You go broke. 💀</li>
+                    </ul>
+                </div>
+
+                <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
+                    <strong className="text-white block mb-1">Step 2: Check the Data</strong>
+                    <p>Look at your notebook. When was the last time Slot 3 saw a Gold stat?</p>
+                    <ul className="list-disc pl-5 mt-2 text-sm text-stone-400">
+                        <li>If it just got a Gold 5 rolls ago... DO NOT LOCK. The next Gold is far away.</li>
+                        <li>You need to build up "Fails" (Pity) for Slot 3.</li>
+                    </ul>
+                </div>
+
+                <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
+                    <strong className="text-white block mb-1">Step 3: The "Trash Swap" Trick (The Secret Sauce)</strong>
+                    <ol className="list-decimal pl-5 mt-2 space-y-2 text-sm text-stone-400">
+                        <li>Save your good stats (Slot 1 & 2 Gold) in Scheme 1.</li>
+                        <li>Switch to Scheme 2 (The Trash Scheme).</li>
+                        <li>Start rolling on the Trash Scheme.
+                            <ul className="list-disc pl-5 mt-1">
+                                <li>We don't care about the result. We are just increasing the "Fail Count".</li>
+                                <li>Keep marking your notebook for Slot 3. 10 fails... 20 fails... 30 fails...</li>
+                            </ul>
+                        </li>
+                        <li>STOP! 🛑</li>
+                        <li>Once Slot 3 has failed about 30-35 times on the Trash Scheme, it is now "Prime/Due" for a Gold.</li>
+                    </ol>
+                </div>
+
+                <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
+                    <strong className="text-white block mb-1">Step 4: The Snipe</strong>
+                    <ol className="list-decimal pl-5 mt-2 space-y-2 text-sm text-stone-400">
+                        <li>Switch BACK to Scheme 1 (Your good one).</li>
+                        <li>LOCK Slot 1 & 2 (The Golds you saved).</li>
+                        <li>Roll.</li>
+                        <li>Because Slot 3 is "Prime" (from your work on the trash scheme), the Gold stat should appear within 1-5 rolls.</li>
+                        <li>Congratulations! You got a 3-Gold weapon for a fraction of the price. 🎉</li>
+                    </ol>
+                </div>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">📊 PART 4: SUMMARY CHECKLIST</h1>
+            <div className="bg-emerald-900/20 p-4 rounded border border-emerald-800">
+                <ol className="list-decimal pl-5 space-y-2 text-white">
+                    <li>Unlock all 5 Slots first. (Costs ~120 Stones).</li>
+                    <li>Never Lock immediately after getting a Gold. The "Pity" resets, so the next rolls are wasted.</li>
+                    <li>Use Trash Schemes to build up "Fail Stacks" cheaply.</li>
+                    <li>Only Lock and Roll on your main scheme when your notebook says a slot is at 30+ Fails.</li>
+                    <li>Stop at 3 or 4 Golds. 5-Gold requires perfect alignment of all 5 slots and is extremely expensive.</li>
+                </ol>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">❓ FREQUENTLY ASKED QUESTIONS (FAQ)</h1>
+            <div className="space-y-4">
+                <div>
+                    <strong className="text-white">Q: Do specific colors (Red/Blue/Green) matter?</strong>
+                    <p className="text-sm text-stone-400">A: For pure visuals? No. Just aim for the "Gold" rarity icon. The specific stat type doesn't change the glow, only the rarity does.</p>
+                </div>
+                <div>
+                    <strong className="text-white">Q: I rolled 40 times and no Gold! You lied!</strong>
+                    <p className="text-sm text-stone-400">A: It's "Pseudo-RNG", not "Hard Pity". It's an average. Sometimes it comes at 20, sometimes at 50. But 35 is the mathematical sweet spot to start trying.</p>
+                </div>
+                <div>
+                    <strong className="text-white">Q: Can I sell this weapon later?</strong>
+                    <p className="text-sm text-stone-400">A: Yes, it works on the Chinese server, but you must verify on the global server or seek help from other players.</p>
+                </div>
+                <div>
+                    <strong className="text-white">Q: What happens if I get a Gold on the "Trash Scheme"?</strong>
+                    <p className="text-sm text-stone-400">A: Laugh and cry. 😂 It happens. It means you "wasted" your luck on the trash scheme. The counter resets to 0. Start counting again.</p>
+                </div>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">🖼️ VISUAL GALLERY</h1>
+            <p className="mb-4">For players asking "Is it worth it?", here is what the effects actually look like. (Sourced from CN community):</p>
+            <div className="space-y-2">
+                {[
+                    'https://files.catbox.moe/59mjns.png',
+                    'https://files.catbox.moe/ogzzr6.png',
+                    'https://files.catbox.moe/vc4zyo.png',
+                    'https://files.catbox.moe/l9pykk.png',
+                    'https://files.catbox.moe/bsqkjf.png'
+                ].map((url, i) => (
+                    <div key={i} className="bg-stone-900 p-2 rounded flex items-center justify-between">
+                        <span className="text-sm font-bold text-stone-400">Effect Reference {i+1}</span>
+                        <a href={url} target="_blank" rel="noopener noreferrer" className="text-wwm-green hover:underline flex items-center gap-1 text-sm">
+                            View Image <ExternalLink size={14} />
+                        </a>
+                    </div>
+                ))}
             </div>
         </div>
     );
 
     const renderPart4 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">Part 4: Merchant Trading Guide</h1>
-            <div className="bg-stone-800/50 p-6 rounded-lg border border-stone-700 text-center">
-                <p className="text-lg">Learn how to make serious money through the merchant system.</p>
-                <p className="mt-4 text-sm text-stone-400">Detailed trade routes and commodity price charts coming soon.</p>
+            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED A PART?</h1>
+            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
+            <hr className="border-stone-700 my-4" />
+
+            <div className="bg-stone-800 p-4 rounded border-l-4 border-wwm-green italic text-sm mb-6">
+                <strong>Disclaimer:</strong> This article is based on CN experience. If there are any changes globally, please refer to the current server for the most up-to-date information.
             </div>
+
+            <div className="flex justify-center my-4">
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-2hc3ap2h7r2g1.png?width=204&format=png&auto=webp&s=dee04023a213b4b5292d31adaafcf62f2d7ffb51" className="rounded-lg shadow-lg border border-stone-700" alt="Trade Office" />
+            </div>
+
+            <div className="space-y-4">
+                <p><strong>NOTE:</strong> The reason for earning this money is that you can then rent out a house; it cannot be purchased, and you will have to pay rent every month. Of course, if you feel you don't need a house, you can skip this.</p>
+                <p>If you want to live in a luxury house, you need <strong>10,000 business currency</strong>, and that's the monthly rent, which you have to pay every month, or your house will be repossessed.</p>
+                <p className="text-sm italic text-stone-500">(There are three levels of housing: 100/month, 1000/month, and 10000/month. If you want to live in a luxury house, you'll have to work hard.)</p>
+                <p>You can rent a house by going to <strong>Feng's Tradehall</strong>. Besides, this money can also be used for gambling (like playing mahjong).</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-mdhgx0sm3l2g1.jpg?width=1080&format=pjpg&auto=webp&s=8ef4259300fca44a36f7e88cb4a1b39670c2ce95" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 1" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-v0i6ap0v3l2g1.jpg?width=1080&format=pjpg&auto=webp&s=cf081b816119e999755db3e9910c44662233c2e6" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 2" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-3dxwb3a04l2g1.jpg?width=1440&format=pjpg&auto=webp&s=6b9a85eb4d00b30c1f7988c1e19cf03012440ab0" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 3" />
+            </div>
+
+            <p>Merchant Runs are one of the most important ways to earn Commerce Coins. However, it is not just about buying low and selling high. If you do not prepare your inventory space first, you will miss out on massive profits.</p>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Step 1: Preparation (Max Out Your Inventory)</h1>
+            <p className="text-white font-bold my-4">➡️ First, go here.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-x5t3prfgx33g1.png?width=2089&format=png&auto=webp&s=a7dd51f558df652c17881fde211aacfb2a7435b0" className="w-full rounded border border-stone-700" alt="Location Map" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-qsq6opeeuk2g1.png?width=1022&format=png&auto=webp&s=48f38053f906afbad67ca920dc7d29fe0b89657b" className="w-full rounded border border-stone-700" alt="NPC Interaction" />
+            </div>
+
+            <div className="bg-stone-900/50 p-4 rounded border border-stone-800 space-y-4">
+                <div>
+                    <strong className="text-white block mb-1">1. Rent Storage at Fengs Tradehall</strong>
+                    <ul className="list-disc pl-5 text-sm text-stone-400">
+                        <li>Find the NPC Feng Cheng. Talk to him and select "House Rental".</li>
+                        <li>Scroll down and rent the option that costs <strong>10,000 Commerce Coins</strong>.</li>
+                        <li>Why? Only the most expensive option gives you +60 Slots and lasts for one month. Do not waste money on cheaper options.</li>
+                    </ul>
+                </div>
+                <div>
+                    <strong className="text-white block mb-1">2. Upgrade Profession Skills</strong>
+                    <ul className="list-disc pl-5 text-sm text-stone-400">
+                        <li>Open your Profession (Guild) menu.</li>
+                        <li>Level up "Trade Office Inventory" to Level 6 (+20 Slots).</li>
+                        <li>Maximize "Sales Bonus" and "Tax Reduction".</li>
+                    </ul>
+                </div>
+                <div className="bg-emerald-900/20 p-2 rounded text-center">
+                    <strong className="text-wwm-green">Total Inventory:</strong> 20 (Initial) + 60 (Rental) + 20 (Skill) = <strong>100 Slots</strong>
+                </div>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Step 2: Understanding Market Mechanics</h1>
+            <p>Go to the Trade Office and talk to the NPC Zhang Qiyue.</p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-3nrgj15guk2g1.png?width=2205&format=png&auto=webp&s=51d521687b1fe2ac6e1f1551f35ea717ffb63b42" className="w-full rounded border border-stone-700" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-7jvca5sfuk2g1.png?width=862&format=png&auto=webp&s=7cb9b070ab71cc3a6726f239b44d79c2ae82ccbb" className="w-full rounded border border-stone-700" />
+            </div>
+
+            <div className="space-y-4">
+                <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
+                    <strong className="text-white block mb-1">Types of Goods</strong>
+                    <ul className="list-disc pl-5 text-sm text-stone-400">
+                        <li><strong>Local Fluctuation:</strong> Price changes within your own world. Be careful if price rises >200%.</li>
+                        <li><strong>Foreign Fluctuation:</strong> Price static in your world. Visit other players via Co-op to sell high.</li>
+                    </ul>
+                </div>
+                <div className="bg-stone-900/50 p-4 rounded border border-stone-800">
+                    <strong className="text-white block mb-1">Stock Limits</strong>
+                    <ul className="list-disc pl-5 text-sm text-stone-400">
+                        <li>Refreshes Saturday and Monday.</li>
+                        <li>Buy limit: 30 items per refresh. Total weekly limit: 180 items.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-jm739dffuk2g1.png?width=3610&format=png&auto=webp&s=9d420539ff48266a2d101ee99b35bf78125ced50" className="w-full rounded-lg border border-stone-700 my-4" alt="Market Analysis" />
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Step 3: The Golden Weekly Schedule</h1>
+            <p>The trading cycle runs from Saturday 6:00 AM to the next Saturday 6:00 AM.</p>
+            <div className="space-y-4 mt-4">
+                <div className="flex gap-4 items-start">
+                    <div className="bg-stone-800 p-2 rounded text-center min-w-[80px] text-xs font-bold text-stone-400">SAT-SUN</div>
+                    <div>
+                        <strong className="text-white block">Hoard Only</strong>
+                        <p className="text-sm text-stone-400">Prices are low. Buy 90 items. Do not sell yet.</p>
+                    </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                    <div className="bg-stone-800 p-2 rounded text-center min-w-[80px] text-xs font-bold text-stone-400">MON-TUE</div>
+                    <div>
+                        <strong className="text-white block">Hold</strong>
+                        <p className="text-sm text-stone-400">Prices rising. Be patient.</p>
+                    </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                    <div className="bg-wwm-green text-stone-900 p-2 rounded text-center min-w-[80px] text-xs font-bold">WED</div>
+                    <div>
+                        <strong className="text-wwm-green block">The Payday</strong>
+                        <p className="text-sm text-stone-400">Prices peak (up to 300%). Sell hoarded items. Buy Mon/Sat refresh stock and sell immediately.</p>
+                    </div>
+                </div>
+                <div className="flex gap-4 items-start">
+                    <div className="bg-stone-800 p-2 rounded text-center min-w-[80px] text-xs font-bold text-stone-400">THU-FRI</div>
+                    <div>
+                        <strong className="text-white block">Cleanup</strong>
+                        <p className="text-sm text-stone-400">Sell whatever is left before reset.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Step 4: The Pro Tip - Profiting Without Travel</h1>
+            <p>Selling at home can yield more profit due to tax reduction skills.</p>
+            <div className="bg-stone-800/50 p-4 rounded border border-stone-700 mt-4">
+                <strong className="text-white">NPC: Cong Bushao</strong>
+                <p className="text-sm text-stone-400 mb-2">Location: Inside your Guild Base / Residence. Left of main gate.</p>
+                <p className="text-sm text-stone-300"><strong>Price Rule:</strong> Selling at Home for 203 ≈ Selling to Stranger for 285 (due to taxes).</p>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Future Content: The "Lone Summit" Sect</h1>
+            <p>A future sect focuses entirely on trading. Members must earn 100 Commerce Coins weekly to maintain standing.</p>
         </div>
     );
 
     const renderPart5 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            {/* Header / Intro */}
-            <h1 className="text-2xl font-bold text-wwm-green">[Note: This guide is constantly being updated. Please check back often!]</h1>
-            <p><strong className="text-white">[UPDATE] GUIDE SPLIT INTO 5 PARTS!</strong></p>
-            <p>Due to Reddit's post length limit, I cannot add more updates here. I have split the guide into Four parts to cover everything in detail.</p>
-            <p className="text-stone-500/50">---</p>
+            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED A PART?</h1>
+            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
+            <hr className="border-stone-700 my-4" />
+
+            <div className="bg-stone-800 p-6 rounded-lg text-center space-y-4">
+                <h1 className="text-3xl font-bold text-wwm-green">Part 5: Cosmetics Roadmap [CN Spoilers]</h1>
+                <p className="text-stone-300 max-w-2xl mx-auto">
+                    Hi everyone, I have noticed many Global players asking about future cosmetics. 
+                    Here is a compiled timeline of all Appearance/Cosmetics released on the CN server to help you plan your Jade budget.
+                </p>
+                <p className="text-sm text-stone-500 font-mono bg-stone-900 inline-block px-3 py-1 rounded">Updated: 2025/11/22</p>
+            </div>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">🛑 How to Read This Guide</h1>
+            <ul className="list-disc pl-5 space-y-2 text-stone-300">
+                <li><strong>Chronological Order:</strong> The list starts from the beginning and goes forward in time.</li>
+                <li><strong>Current Status:</strong> Updated up to Nov 2025 (CN).</li>
+                <li><strong>WIP:</strong> This is a massive project; I will update regularly.</li>
+            </ul>
+
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">💡 Cosmetic Showcase</h1>
+            <p className="mb-4">Click the links below to view the outfits (External Image Links):</p>
             
-            {/* Navigation Index */}
-            <h1 className="text-2xl font-bold mt-6 mb-4 text-stone-200">⚠️ NAVIGATION INDEX</h1>
-            <div className="space-y-3">
-                <p className="flex items-start gap-2">
-                    <span>👉</span> 
-                    <button onClick={() => setActiveGuide('PART1')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                        [CLICK HERE FOR PART1: F2P & Spending Guide]
-                    </button>
-                </p>
-                <p className="flex items-start gap-2">
-                    <span>👉</span> 
-                    <button onClick={() => setActiveGuide('PART2')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                        [CLICK HERE FOR PART 2: Gameplay, UI & "No-Grind" Routine]
-                    </button>
-                </p>
-                <p className="flex items-start gap-2">
-                    <span>👉</span> 
-                    <button onClick={() => setActiveGuide('PART3')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                        [CLICK HERE FOR PART 3: Advanced Weapon Reforging]
-                    </button>
-                </p>
-                <p className="flex items-start gap-2">
-                    <span>👉</span> 
-                    <button onClick={() => setActiveGuide('PART4')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                        [CLICK HERE FOR PART 4: Merchant Trading Guide]
-                    </button>
-                </p>
-                <p className="flex items-start gap-2">
-                    <span>👉</span> 
-                    <button onClick={() => setActiveGuide('PART5')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                        [CLICK HERE FOR PART 5: Cosmetics Roadmap]
-                    </button>
-                </p>
-                 <p className="flex items-start gap-2">
-                    <span>👉</span> 
-                    <a href="https://www.reddit.com/r/wherewindsmeet_/comments/1p6xsyn/psa_if_you_cant_trigger_a_new_encounterquest_read/" target="_blank" rel="noopener noreferrer" className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                        [PSA] If you can't trigger a new Encounter/Quest, read this
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {[
+                    { url: 'https://files.catbox.moe/uj5eax.jpg', note: 'Revised 2025/11/22' },
+                    { url: 'https://files.catbox.moe/ghjfsg.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/2sjin0.jpg', note: 'Revised 2025/11/22 (Added fox details)' },
+                    { url: 'https://files.catbox.moe/g5jt5g.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/a5n8r4.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/nlkeoy.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/7a2cz9.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/zh11cl.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/unijd6.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/utx9tk.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/12fs7e.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/g48mcw.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/u6zpdx.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/leom6t.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/9oyht9.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/wx5z0c.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/w1mixt.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/df3t8m.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/on9wcg.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/knkewt.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/e2epcj.jpg', note: '' },
+                    { url: 'https://files.catbox.moe/g7jch2.jpg', note: '' }
+                ].map((item, i) => (
+                    <a 
+                        key={i} 
+                        href={item.url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between p-3 bg-stone-900 rounded hover:bg-stone-800 transition-colors border border-stone-800 hover:border-wwm-green group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <ImageIcon size={18} className="text-stone-500 group-hover:text-wwm-green" />
+                            <span className="text-sm font-mono text-stone-300">Outfit Showcase #{i+1}</span>
+                        </div>
+                        <div className="text-xs text-stone-500 flex items-center gap-2">
+                            {item.note && <span className="text-wwm-green">{item.note}</span>}
+                            <ExternalLink size={14} />
+                        </div>
                     </a>
-                </p>
-            </div>
-            
-            <p className="text-stone-500/50 pt-4 border-t border-stone-800 mt-4">---</p>
-            <p><em>(Original Post Starts Below)</em></p>
-
-            {/* Section 1 */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">Intro & Reality Check</h1>
-            <p>Hi everyone! I play on the CN server. English isn't my first language, so I'm using AI to help translate.</p>
-            <p className="mt-2">I have spent some time putting this guide together to cover as many items and mechanics as possible. <strong className="text-white">If you have any questions, please leave a comment.</strong></p>
-            
-            <div className="bg-stone-900/50 p-4 rounded border border-stone-800 my-4">
-                <p className="mb-2"><strong className="text-wwm-green">⚠️ Important Expectation Management:</strong></p>
-                <p className="mb-2">I want to be very clear: <strong className="text-white">This game is NOT predatory Pay-to-Win</strong> (spending is entirely restricted to cosmetics).</p>
-                <p className="mb-2"><strong className="text-white">HOWEVER, it is undeniably still an MMO.</strong> Even though it looks like a single-player action game, the payment structure is "bloated".</p>
-                <p><strong className="text-white">For F2P Players:</strong> You can experience 100% of the continuous Main Story and Map updates without spending a single penny.</p>
+                ))}
             </div>
 
-            {/* Section 1: Store */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">1. The Store & The "50% Off" Trick</h1>
-            <div className="flex justify-center my-4">
-                <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3jrsf41id62g1.png?width=117&format=png&auto=webp&s=a12fe9cabc2a31a0eda46793454a3a03c4f424a2" alt="Coupons" className="rounded border border-stone-700" />
-            </div>
-            <p>For cosmetics sold directly in the store, never pay full price.</p>
-            <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong className="text-white">The Coupons:</strong> Look like golden rectangular tickets. Each gives <strong className="text-emerald-400">10% off</strong>.</li>
-                <li><strong className="text-white">Stacking:</strong> Stack up to 5 coupons for <strong className="text-emerald-400">50% off</strong>.</li>
-                <li><strong className="text-white">Sources:</strong> Daily Sign-ins (every ~18 days) and Resonance Shop (1/month).</li>
-            </ul>
-
-            {/* Section 2: Echo Jade */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">2. Echo Jade (Free Currency)</h1>
-            <div className="flex justify-center my-4">
-                <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ug3fvb9d62g1.png?width=79&format=png&auto=webp&s=46b5e5fc2f2bada720cd635d993e2fc490770cea" alt="Echo Jade" className="rounded border border-stone-700" />
-            </div>
-            <p>Jade is green currency from gameplay. <strong>NOT purchasable with real money</strong>.</p>
-            <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong>Re-customization:</strong> 200 Jade.</li>
-                <li><strong>Skill Books:</strong> ~5000 Jade total. Prioritize 'Yi Shui Ge'.</li>
-                <li><strong>Gacha Exchange:</strong> 160 Jade = 1 Standard Pull. 200 Jade = 1 Limited Pull (Limit 2/week).</li>
-            </ul>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2 my-4">
-                 <div className="text-center">
-                    <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-pfkgj5fwg62g1.png?width=195&format=png&auto=webp&s=e1678b401b84d8618e19cb360dd5026f13305e6c" className="rounded border border-stone-700 mx-auto" />
-                    <span className="text-xs text-stone-500">Customize Ticket</span>
-                 </div>
-                 <div className="text-center">
-                    <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-f03sctzej62g1.png?width=225&format=png&auto=webp&s=813fd3a212a8396c23a3fc907a1f2ea1df1c39fc" className="rounded border border-stone-700 mx-auto" />
-                    <span className="text-xs text-stone-500">Skill Book</span>
-                 </div>
-            </div>
-            <p className="bg-stone-800 p-2 rounded border border-stone-700 text-sm">
-                ⚠️ <strong>Critical Tip:</strong> Save for "Limited Echo Jade Banners". Usually requires ~24k Jade for a guaranteed outfit. Unlock this banner by pulling 200 times on standard first (lifetime count).
-            </p>
-
-            {/* Section 3: Celestial Echo */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">3. Celestial Echo: F2P Strategy</h1>
-            <p>Limited banner (Cash/Special Echo). Hard pity at 150 pulls. <strong>F2P can grind this.</strong></p>
-            <ul className="list-disc pl-5 space-y-2 mt-2">
-                <li><strong>Weekly:</strong> Buy 2 pulls (200 Jade each) + 1 pull (Season Shop).</li>
-                <li><strong>Monthly:</strong> Exchange for 2 pulls in shop.</li>
-                <li><strong>Result:</strong> ~30 free pulls/month. 4-6 months to hit pity.</li>
-            </ul>
-            <p className="mt-2"><strong>Regret Mechanic:</strong> If you get the outfit but don't like it, dismantle it (while unused in bag) for "Harmonic Cores" to buy the weapon skin instead.</p>
-
-            {/* Section 4: Advanced Gacha */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">4. Advanced Gacha Mechanics</h1>
-            <ul className="list-disc pl-5 space-y-2">
-                <li><strong>Hidden Pity:</strong> After 131 pulls, if you get a gold drop that isn't the outfit, you gain 20% wish value. At 100%, next gold is guaranteed outfit.</li>
-                <li><strong>Duplicate Recycling:</strong> Duplicate purples convert to tokens for Premium Dye, Reroll Stones, or SFX.</li>
-            </ul>
-
-            {/* Section 5: Dye System */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">5. The Dye System</h1>
-            <div className="flex gap-4 my-4">
-                <div className="text-center">
-                    <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ido9dqdf62g1.png?width=101&format=png&auto=webp&s=bf12958d70e3e99061c59158c609049bde3bb5e8" className="rounded border border-stone-700 mx-auto" />
-                    <span className="text-xs text-stone-500">Basic Dye</span>
+            <div className="mt-8 space-y-4">
+                <div className="bg-stone-900 p-4 rounded border border-stone-800">
+                    <strong className="text-wwm-green block mb-2 flex items-center gap-2"><Download size={18}/> Google Drive Archive</strong>
+                    <p className="text-sm text-stone-400 mb-2">Access the full folder of images:</p>
+                    <a href="https://drive.google.com/drive/folders/1UqI9ox1SHNBITYEEZQxuBwCI0_VvmIl9?usp=sharing" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline break-all text-sm">
+                        https://drive.google.com/drive/folders/1UqI9ox1SHNBITYEEZQxuBwCI0_VvmIl9?usp=sharing
+                    </a>
                 </div>
-                <div className="text-center">
-                    <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hkr78ia0f62g1.png?width=105&format=png&auto=webp&s=7e8b151e1914d3afcb33b1b4b2e6982cc4e946e1" className="rounded border border-stone-700 mx-auto" />
-                    <span className="text-xs text-stone-500">Premium Dye</span>
+
+                <div className="bg-stone-900 p-4 rounded border border-stone-800">
+                    <strong className="text-red-400 block mb-2 flex items-center gap-2"><Youtube size={18}/> Video Showcase</strong>
+                    <p className="text-sm text-stone-400 mb-2">Victory Cutscenes & Full Skin Showcase:</p>
+                    <a href="https://youtu.be/FsmaAKV9xko?si=7ZbeE3q_KXSk1nmX" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline break-all text-sm">
+                        https://youtu.be/FsmaAKV9xko?si=7ZbeE3q_KXSk1nmX
+                    </a>
                 </div>
             </div>
-            <p><strong>Basic Dye (Wooden Box):</strong> Low saturation. Farm via Dihua Shop (Standard Gacha Shop), Battle Pass, Social Shops. Easy to get.</p>
-            <p><strong>Premium Dye (Green Box):</strong> High saturation (Neon/Deep Black). Farm via Dihua Shop (10/week) and Stardust Shop. Harder to get.</p>
-            <p className="mt-2 text-red-400 font-bold">⚠️ WARNING: Do not buy "Pre-Dyed" bundles with Pearls! Buy the base outfit and use your free farmed dyes.</p>
-            
-            <h3 className="font-bold text-white mt-4">Hair Dyes</h3>
-            <p><strong>Basic (Beige Pot):</strong> Natural colors. Farm via Dihua Shop.</p>
-            <p><strong>Premium (Blue Pot):</strong> White/Silver hair. Very expensive to craft. <strong>Tip:</strong> Wait for Limited Paid Banners that sell pre-dyed hair for cheaper exchange rates.</p>
 
-            {/* Section 6: Future Events */}
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">6. Future Events (CN Insights)</h1>
-            <p><strong>Step-Up Spin:</strong> 4 layers. Layer 1-3 costs ~5-6k Pearls. Layer 4 is expensive. Save Monthly Pass pearls for this.</p>
-            <p><strong>Turtle Matching:</strong> Mini-game for cosmetics. Don't spend points immediately; wait until you finish all draws as items can drop directly.</p>
-
-            <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">Conclusion</h1>
-            <p>Understanding the economy early helps you decide if this game fits your budget. Whether you grind hard or play casually, I hope this transparency helps.</p>
+            <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">📝 Notes</h1>
+            <ul className="list-disc pl-5 space-y-2 text-stone-300">
+                <li><strong>Release Dates:</strong> These follow the CN timeline. The Global release schedule might be faster or slower.</li>
+                <li>Some free cosmetic items, Skill effects, and weapon appearances were skipped due to the sheer volume.</li>
+            </ul>
         </div>
     );
 
