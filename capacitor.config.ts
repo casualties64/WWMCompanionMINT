@@ -17,7 +17,11 @@ const config: CapacitorConfig = {
       'preview.redd.it',
       'mapgenie.io',
       'yysls-map.6fast.com',
-      'boarhat.gg'
+      'boarhat.gg',
+      'assets.game8.co',
+      'img.game8.co',
+      'game8.co',
+      'game8.jp'
     ]
   }
 };

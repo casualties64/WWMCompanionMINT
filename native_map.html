@@ -1,0 +1,698 @@
+
+<!DOCTYPE html>
+<html lang="en-US" data-theme="dark">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <title>Where Winds Meet Interactive Map</title>
+    
+    <!-- Local Leaflet CSS -->
+    <link rel="stylesheet" href="leaflet/leaflet.css">
+    
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; background: #1c1917; }
+        
+        /* Map Container */
+        .leaflet-container { 
+            height: 100% !important; 
+            width: 100% !important; 
+            background: #1c1917; 
+            outline: none;
+        }
+
+        /* Sidebar Styles (Re-using Game8 classes for consistency) */
+        .style-module__container___IHtqa {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 1000;
+            display: flex;
+            pointer-events: none; /* Let clicks pass through to map */
+        }
+
+        .style-module__sideHud___PDoFs {
+            pointer-events: auto;
+            position: relative;
+            z-index: 1001;
+        }
+
+        .style-module__scrollContainer___ptsg5 {
+            width: 320px;
+            background: rgba(28, 25, 23, 0.95); /* stone-900 with opacity */
+            backdrop-filter: blur(10px);
+            border-right: 1px solid #333;
+            overflow-y: auto;
+            pointer-events: auto;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease;
+        }
+
+        .style-module__scrollContainer___ptsg5.collapsed {
+            transform: translateX(-100%);
+            width: 0;
+        }
+
+        /* Toggle Button */
+        .style-module__openButton___6tAx3 {
+            position: absolute;
+            left: 100%;
+            top: 20px;
+            background: #292524; /* stone-800 */
+            color: #fff;
+            border: 1px solid #444;
+            border-left: none;
+            padding: 8px 4px;
+            cursor: pointer;
+            border-radius: 0 4px 4px 0;
+            pointer-events: auto;
+        }
+
+        /* Marker List Items */
+        .style-module__markerListContainer___if3H2 {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .style-module__markerListButton___e6kaX {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid transparent;
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            color: #eee;
+            transition: all 0.2s;
+            text-align: left;
+        }
+
+        .style-module__markerListButton___e6kaX:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .style-module__markerListButton___e6kaX.active {
+            border-color: rgb(30, 227, 135);
+            background: rgba(30, 227, 135, 0.1);
+            opacity: 1 !important;
+        }
+
+        .style-module__markerListButton___e6kaX.inactive {
+            opacity: 0.5;
+        }
+
+        .style-module__markerListIcon___aE7pO {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+
+        .style-module__markerListClassificationText___T3EM7 {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .style-module__markerListCountText___3APtF {
+            font-size: 11px;
+            color: #888;
+            margin: 0;
+        }
+
+        /* Headers */
+        .style-module__markerGroupToggleButton___YQvWB {
+            background: transparent;
+            color: #ccc;
+            border: none;
+            padding: 10px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid #333;
+            margin-top: 10px;
+        }
+
+        /* Zoom Controls */
+        .style-module__mapButtonsContainer___t0D31 {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .style-module__sideButton___KTQIP {
+            width: 36px;
+            height: 36px;
+            background: #222;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .style-module__sideButton___KTQIP:hover {
+            background: #444;
+        }
+        
+        .style-module__sideButton___KTQIP svg {
+            fill: currentColor;
+        }
+
+        /* Hide extraneous Game8 elements */
+        .p-rootHeaderWrapper, .p-gameHeader, .a-announce, dialog, .leaflet-control-container {
+            display: none !important;
+        }
+        
+        .leaflet-div-icon {
+            background: transparent;
+            border: none;
+        }
+        
+        .leaflet-div-icon img {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+            transition: transform 0.2s;
+        }
+        
+        .leaflet-div-icon img:hover {
+            transform: scale(1.2);
+        }
+
+    </style>
+
+    <!-- Local Leaflet JS -->
+    <script src="leaflet/leaflet.js"></script>
+</head>
+<body>
+
+    <!-- Structure Mimicking the scraped content for the script to attach to -->
+    <div class="style-module__container___IHtqa">
+        
+        <!-- Sidebar -->
+        <div class="style-module__scrollContainer___ptsg5" id="sidebar-content">
+            <div class="style-module__mapSelectorsContainer___qVNj-">
+                <div style="padding: 15px; color: rgb(30, 227, 135); font-weight: bold; border-bottom: 1px solid #333;">
+                    NATIVE MAP (OFFLINE)
+                </div>
+            </div>
+
+            <!-- Categories and Buttons (Populated from Scraped HTML structure) -->
+            <div id="filter-list">
+                <!-- Will be reorganized by script -->
+            </div>
+        </div>
+
+        <!-- Toggle Sidebar Button -->
+        <div class="style-module__sideHud___PDoFs">
+            <button class="style-module__openButton___6tAx3" id="sidebar-toggle">
+                <svg width="9" height="14" viewBox="0 0 9 14" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M7.94232 0.419196C8.47752 0.942396 8.51952 1.6708 7.94232 2.3104L3.44592 7L7.94232 11.6896C8.51952 12.3292 8.47752 13.0588 7.94232 13.5784C7.40832 14.1016 6.50592 14.068 6.00432 13.5784C5.50272 13.0912 0.601921 7.9444 0.601921 7.9444C0.334321 7.684 0.19992 7.342 0.19992 7C0.19992 6.658 0.334321 6.316 0.601921 6.0532C0.601921 6.0532 5.50272 0.908796 6.00432 0.419196C6.50592 -0.0704043 7.40832 -0.104004 7.94232 0.419196Z"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map" class="leaflet-container"></div>
+
+    <!-- Zoom Controls -->
+    <div class="style-module__mapButtonsContainer___t0D31">
+        <div>
+            <button class="style-module__sideButton___KTQIP style-module__zoomIn___2pko-" id="zoom-in">
+                <svg width="16" height="16" viewBox="0 0 16 16"><path d="M7 2H9V14H7Z"></path><path d="M2 7V9H14V7Z"></path></svg>
+            </button>
+            <button class="style-module__sideButton___KTQIP style-module__zoomOut___WjyC8" id="zoom-out">
+                <svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 7V9H14V7Z"></path></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- HIDDEN DATA SOURCE: Copied from original HTML to act as data source -->
+    <div id="data-source" style="display: none;">
+        <!-- Background -->
+        <img class="leaflet-image-layer" src="https://img.game8.co/4337717/67ae97bf60feaf8a6166458f577a9433.gif/original" data-width="750" data-height="750" data-tx="-30" data-ty="-21">
+
+        <!-- Filters/Categories -->
+        <div class="marker-groups">
+            <div data-group="Fast Travel Points">
+                <button data-name="Boundary Stone" data-icon="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show"></button>
+                <button data-name="Wayfarer" data-icon="https://img.game8.co/4324075/36a5f2c91ae10cbfbb658d4869a4f761.png/show"></button>
+            </div>
+            <div data-group="Quests">
+                <button data-name="Campaign Quest" data-icon="https://img.game8.co/4324341/b90fa461c4348ca999b950c23c939f66.png/show"></button>
+                <button data-name="Side Story" data-icon="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show"></button>
+            </div>
+            <div data-group="Points of Interest">
+                <button data-name="Campaign Boss" data-icon="https://img.game8.co/4329653/cc1e1aec733e539446dfba526ca11bb8.png/show"></button>
+                <button data-name="World Boss" data-icon="https://img.game8.co/4324303/064918415ca264bcfcd52991965e965e.png/show"></button>
+                <button data-name="Bounty" data-icon="https://img.game8.co/4324290/63f3d3a52c447304c7161b9b9b1e6d77.png/show"></button>
+                <button data-name="Crafting Bench" data-icon="https://img.game8.co/4324284/38902a8f14986788a31d3d7e416f47dc.png/show"></button>
+                <button data-name="Divinecraft Dungeon" data-icon="https://img.game8.co/4329729/5a8d31ef7a0394adec1d2d9949a32003.png/show"></button>
+                <button data-name="Horse Merchant" data-icon="https://img.game8.co/4329644/1fb4ec64d7aac0d977de65ef7c368609.png/show"></button>
+                <button data-name="Horse Ranch" data-icon="https://img.game8.co/4324368/b424fe841c6abb532f5ce1867465f5a7.png/show"></button>
+                <button data-name="Market Office" data-icon="https://img.game8.co/4324332/303b5df18613d6bf7a2670982e627257.png/show"></button>
+                <button data-name="Meow Meow Temple" data-icon="https://img.game8.co/4324376/0b1d0a92ab3741e915dcb7682f54ff09.png/show"></button>
+                <button data-name="Outpost" data-icon="https://img.game8.co/4324283/dd85561d4e395203053e6e567ee4b0b7.png/show"></button>
+                <button data-name="Prison" data-icon="https://img.game8.co/4324377/4dbd5bc1e095fe43f53b9e3fef907048.png/show"></button>
+                <button data-name="Shadow Puppet Stall" data-icon="https://img.game8.co/4324336/361e7021b75d356548d35af29ece4c8b.png/show"></button>
+                <button data-name="Shop" data-icon="https://img.game8.co/4324323/849e943e29df611d350ba860c514e027.png/show"></button>
+                <button data-name="Wandering Seal" data-icon="https://img.game8.co/4329615/8d26c4076b75233d2af8ff80b2acffdb.png/show"></button>
+                <button data-name="Wandering Tale" data-icon="https://img.game8.co/4330085/70a6b505a63a1659e9e848b3a92f7801.png/show"></button>
+            </div>
+            <div data-group="Sentient Beings">
+                <button data-name="Antique" data-icon="https://img.game8.co/4329801/41b985fcc3e62f38c5784f2e729c4883.png/show"></button>
+                <button data-name="Archery Competition" data-icon="https://img.game8.co/4324264/a8138c44f219f01bc7671af732c88acb.png/show"></button>
+                <button data-name="Camp" data-icon="https://img.game8.co/4335333/7e97daffa8f4c805089d8aff03554a51.png/show"></button>
+                <button data-name="Cat Play" data-icon="https://img.game8.co/4335458/cc339044831eb6f6a71f23db8ab9da31.png/show"></button>
+                <button data-name="Chess Match" data-icon="https://img.game8.co/4329603/ec95122da17e02fadb8dd855137442f1.png/show"></button>
+                <button data-name="Chest" data-icon="https://img.game8.co/4324408/de3c40297e57d568e255d648b1cd20c0.png/show"></button>
+                <button data-name="Encounter" data-icon="https://img.game8.co/4331122/bd7034a17cf8acd31db456608d7bc9a9.png/show"></button>
+                <button data-name="Fishing Contest" data-icon="https://img.game8.co/4324291/9459352226296a3df2750bba6087d14c.png/show"></button>
+                <button data-name="Gift of Gab" data-icon="https://img.game8.co/4324282/efa49f1f15c1b56ae3885ce6eb801648.png/show"></button>
+                <button data-name="Graceful Melody" data-icon="https://img.game8.co/4350035/b84007c9e2f9763fff2a8674852669f2.png/show"></button>
+                <button data-name="Healer Healing" data-icon="https://img.game8.co/4324280/d693b5bbe5243e620a0834cce9f59577.png/show"></button>
+                <button data-name="Hidden Paths" data-icon="https://img.game8.co/4330907/0583e6f3d2669ecb6c6dad2b801d5973.png/show"></button>
+                <button data-name="Injustice" data-icon="https://img.game8.co/4335328/64199981f583e72b3d56b1d13602fab3.png/show"></button>
+                <button data-name="Madiao" data-icon="https://img.game8.co/4329942/a65f8717f39374711dc1ca60dfa3de72.png/show"></button>
+                <button data-name="Martial Fellowship" data-icon="https://img.game8.co/4324403/8facbfbd7dc8124e3984fbed39259b63.png/show"></button>
+                <button data-name="Meow Meow’s Treasure" data-icon="https://img.game8.co/4324299/be5fce2b604439e75f93836f51158972.png/show"></button>
+                <button data-name="Old Friend" data-icon="https://img.game8.co/4335386/8956d6e5f4f0ce7213479ecdaf4fe5b7.png/show"></button>
+                <button data-name="Pitch Pot" data-icon="https://img.game8.co/4329238/89002d2e8375ab4789836661df6113ea.png/show"></button>
+                <button data-name="Universal Harmony" data-icon="https://img.game8.co/4330906/71dc8fd0ad7a0ae46ab064d02c687c38.png/show"></button>
+                <button data-name="Wild Ritual Ghost Fire" data-icon="https://img.game8.co/4330905/313b632847929e187ad440b4e930bfb4.png/show"></button>
+            </div>
+            <div data-group="Oddities">
+                <button data-name="Dagger General" data-icon="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show"></button>
+                <button data-name="Ironwing Mantis" data-icon="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show"></button>
+                <button data-name="Enchanting Lotus" data-icon="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show"></button>
+                <button data-name="Redmist Beetle" data-icon="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show"></button>
+                <button data-name="Whisper Hive" data-icon="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show"></button>
+            </div>
+        </div>
+
+        <!-- Markers Snapshot -->
+        <div id="markers-snapshot">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="480" data-ty="760">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="448" data-ty="714">
+            <img src="https://img.game8.co/4324075/36a5f2c91ae10cbfbb658d4869a4f761.png/show" class="marker-data" data-tx="430" data-ty="718">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="387" data-ty="715">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="404" data-ty="752">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="339" data-ty="717">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="355" data-ty="804">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="294" data-ty="793">
+            <img src="https://img.game8.co/4324075/36a5f2c91ae10cbfbb658d4869a4f761.png/show" class="marker-data" data-tx="287" data-ty="737">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="271" data-ty="725">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="255" data-ty="747">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="229" data-ty="709">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="176" data-ty="709">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="155" data-ty="673">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="137" data-ty="669">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="115" data-ty="704">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="70" data-ty="695">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="81" data-ty="750">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="137" data-ty="752">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="170" data-ty="786">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="-3" data-ty="791">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="56" data-ty="827">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="105" data-ty="834">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="148" data-ty="841">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="172" data-ty="860">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="177" data-ty="886">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="165" data-ty="950">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="284" data-ty="865">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="231" data-ty="816">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="454" data-ty="627">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="409" data-ty="624">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="404" data-ty="648">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="361" data-ty="625">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="276" data-ty="655">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="245" data-ty="642">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="248" data-ty="593">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="207" data-ty="567">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="122" data-ty="603">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="111" data-ty="537">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="226" data-ty="518">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="332" data-ty="561">
+            <img src="https://img.game8.co/4324075/36a5f2c91ae10cbfbb658d4869a4f761.png/show" class="marker-data" data-tx="283" data-ty="593">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="369" data-ty="686">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="326" data-ty="720">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="400" data-ty="769">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="293" data-ty="788">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="161" data-ty="784">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="105" data-ty="757">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="268" data-ty="502">
+            <img src="https://img.game8.co/4324341/b90fa461c4348ca999b950c23c939f66.png/show" class="marker-data" data-tx="219" data-ty="859">
+            <img src="https://img.game8.co/4324341/b90fa461c4348ca999b950c23c939f66.png/show" class="marker-data" data-tx="50" data-ty="766">
+            <img src="https://img.game8.co/4324341/b90fa461c4348ca999b950c23c939f66.png/show" class="marker-data" data-tx="318" data-ty="602">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="415" data-ty="710">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="472" data-ty="744">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="504" data-ty="762">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="484" data-ty="780">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="449" data-ty="765">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="420" data-ty="741">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="401" data-ty="718">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="389" data-ty="727">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="390" data-ty="700">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="380" data-ty="687">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="424" data-ty="683">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="435" data-ty="669">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="461" data-ty="703">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="455" data-ty="717">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="449" data-ty="715">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="358" data-ty="720">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="366" data-ty="711">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="350" data-ty="703">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="359" data-ty="677">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="344" data-ty="665">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="374" data-ty="792">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="359" data-ty="819">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="320" data-ty="807">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="313" data-ty="788">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="284" data-ty="820">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="324" data-ty="727">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="329" data-ty="739">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="322" data-ty="749">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="313" data-ty="762">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="295" data-ty="723">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="456" data-ty="622">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="469" data-ty="604">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="517" data-ty="607">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="499" data-ty="651">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="440" data-ty="582">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="483" data-ty="553">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="500" data-ty="570">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="514" data-ty="548">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="422" data-ty="594">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="380" data-ty="600">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="421" data-ty="591">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="380" data-ty="625">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="401" data-ty="620">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="386" data-ty="625">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="404" data-ty="642">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="472" data-ty="650">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="473" data-ty="673">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="491" data-ty="670">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="352" data-ty="556">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="296" data-ty="550">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="326" data-ty="631">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="246" data-ty="596">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="268" data-ty="610">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="278" data-ty="665">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="306" data-ty="652">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="246" data-ty="635">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="261" data-ty="672">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="252" data-ty="683">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="221" data-ty="563">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="210" data-ty="645">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="218" data-ty="618">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="214" data-ty="608">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="204" data-ty="587">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="192" data-ty="584">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="280" data-ty="562">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="265" data-ty="546">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="233" data-ty="547">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="254" data-ty="507">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="272" data-ty="504">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="178" data-ty="572">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="185" data-ty="514">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="165" data-ty="515">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="176" data-ty="496">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="172" data-ty="479">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="119" data-ty="502">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="114" data-ty="521">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="119" data-ty="560">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="137" data-ty="552">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="92" data-ty="602">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="118" data-ty="594">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="174" data-ty="609">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="147" data-ty="608">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="171" data-ty="633">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="149" data-ty="634">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="128" data-ty="629">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="176" data-ty="654">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="116" data-ty="648">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="163" data-ty="686">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="196" data-ty="676">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="197" data-ty="680">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="179" data-ty="709">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="177" data-ty="734">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="270" data-ty="768">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="237" data-ty="754">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="223" data-ty="745">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="226" data-ty="738">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="233" data-ty="788">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="258" data-ty="817">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="315" data-ty="848">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="275" data-ty="859">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="249" data-ty="865">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="243" data-ty="894">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="221" data-ty="899">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="198" data-ty="906">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="191" data-ty="919">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="161" data-ty="918">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="185" data-ty="954">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="173" data-ty="886">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="229" data-ty="830">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="200" data-ty="854">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="188" data-ty="827">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="204" data-ty="808">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="198" data-ty="788">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="188" data-ty="754">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="160" data-ty="797">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="125" data-ty="932">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="102" data-ty="887">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="79" data-ty="865">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="78" data-ty="842">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="153" data-ty="876">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="147" data-ty="855">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="162" data-ty="841">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="140" data-ty="815">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="115" data-ty="830">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="95" data-ty="820">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="48" data-ty="810">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="53" data-ty="800">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="100" data-ty="796">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="71" data-ty="782">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="63" data-ty="778">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="46" data-ty="787">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="-9" data-ty="797">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="-24" data-ty="760">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="14" data-ty="747">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="36" data-ty="739">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="47" data-ty="747">
+            <img src="https://img.game8.co/4324472/67e6fe5a4e30295f803332e6b68a8d68.png/show" class="marker-data" data-tx="71" data-ty="725">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="90" data-ty="716">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="101" data-ty="730">
+            <img src="https://img.game8.co/4324471/cc2100b1fe5fac58e3f7979d7fc87bb1.png/show" class="marker-data" data-tx="29" data-ty="709">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="132" data-ty="592">
+            <img src="https://img.game8.co/4324447/56ce85913bc87e05f20c6df2bcb284f0.png/show" class="marker-data" data-tx="243" data-ty="850">
+            <img src="https://img.game8.co/4324275/144e05f4121de8508458f93245550eaf.png/show" class="marker-data" data-tx="221" data-ty="598">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="219" data-ty="597">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="607" data-ty="309">
+            <img src="https://img.game8.co/4324437/b1e3cd29b5a9ce748b2d68e7ce10f55b.png/show" class="marker-data" data-tx="103" data-ty="694">
+            <img src="https://img.game8.co/4324433/7deed39469be7f93826cc08dcdac007d.png/show" class="marker-data" data-tx="121" data-ty="705">
+            <img src="https://img.game8.co/4324076/2bf2e05e360dfe8c81e685793760de2c.png/show" class="marker-data" data-tx="315" data-ty="607">
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Scrape Data from Snapshot ---
+        
+        // Find background image settings from hidden snapshot
+        const dataSource = document.getElementById('data-source');
+        const bgImgEl = dataSource.querySelector('.leaflet-image-layer');
+        const bgSrc = bgImgEl.src;
+        // In the snapshot: transform: translate3d(-30px, -21px, 0px); width: 750px;
+        const bgWidth = 750;
+        const bgHeight = 750;
+        const bgOffsetX = -30;
+        const bgOffsetY = -21;
+
+        // Parse Markers
+        const rawMarkers = dataSource.querySelectorAll('.marker-data');
+        const markersData = [];
+        
+        rawMarkers.forEach(el => {
+            const src = el.src;
+            const tx = parseFloat(el.getAttribute('data-tx'));
+            const ty = parseFloat(el.getAttribute('data-ty'));
+            
+            // Calculate relative position (0.0 to 1.0) on the 750x750 image
+            // The markers were positioned relative to the map pane. 
+            // The image was at -30, -21 relative to map pane.
+            // So relative to image top-left:
+            const relX = (tx - bgOffsetX) / bgWidth;
+            const relY = (ty - bgOffsetY) / bgHeight;
+            
+            markersData.push({ src, relX, relY });
+        });
+
+        // Parse Categories
+        const categories = [];
+        const groupEls = dataSource.querySelectorAll('[data-group]');
+        
+        groupEls.forEach(groupEl => {
+            const groupName = groupEl.getAttribute('data-group');
+            const btns = groupEl.querySelectorAll('button');
+            
+            btns.forEach(btn => {
+                const name = btn.getAttribute('data-name');
+                const iconSrc = btn.getAttribute('data-icon');
+                categories.push({
+                    group: groupName,
+                    name: name,
+                    iconSrc: iconSrc,
+                    active: true // Default all on
+                });
+            });
+        });
+
+        // --- 2. Build UI ---
+
+        const filterList = document.getElementById('filter-list');
+        const categoryMap = {}; // Map iconSrc -> category object
+        
+        // Group categories by Group Name
+        const groups = {};
+        categories.forEach(cat => {
+            if(!groups[cat.group]) groups[cat.group] = [];
+            groups[cat.group].push(cat);
+            categoryMap[cat.iconSrc] = cat;
+        });
+
+        // Generate Sidebar HTML
+        for (const [groupName, cats] of Object.entries(groups)) {
+            const header = document.createElement('button');
+            header.className = 'style-module__markerGroupToggleButton___YQvWB';
+            header.innerText = groupName;
+            filterList.appendChild(header);
+
+            const container = document.createElement('div');
+            container.className = 'style-module__markerListContainer___if3H2';
+            
+            cats.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'style-module__markerListButton___e6kaX active';
+                btn.innerHTML = `
+                    <img class="style-module__markerListIcon___aE7pO" src="${cat.iconSrc}">
+                    <p class="style-module__markerListClassificationText___T3EM7">${cat.name}</p>
+                    <p class="style-module__markerListCountText___3APtF">0</p>
+                `;
+                
+                // Store ref to update count later
+                cat.uiElement = btn;
+                cat.countElement = btn.querySelector('p:last-child');
+                
+                // Click Handler
+                btn.onclick = () => {
+                    cat.active = !cat.active;
+                    if(cat.active) {
+                        btn.classList.add('active');
+                        btn.classList.remove('inactive');
+                        if(cat.layerGroup) map.addLayer(cat.layerGroup);
+                    } else {
+                        btn.classList.remove('active');
+                        btn.classList.add('inactive');
+                        if(cat.layerGroup) map.removeLayer(cat.layerGroup);
+                    }
+                };
+
+                container.appendChild(btn);
+            });
+            filterList.appendChild(container);
+        }
+
+        // --- 3. Initialize Leaflet Map ---
+        
+        const map = L.map('map', {
+            crs: L.CRS.Simple,
+            minZoom: -2,
+            maxZoom: 2,
+            zoomControl: false,
+            attributionControl: false
+        });
+
+        // Define map bounds (Square 1000x1000 coordinate system)
+        // Y goes down in CRS.Simple usually, but imageOverlay bounds: [[0,0], [height, width]]? 
+        // Standard practice for image map: [[0,0], [-height, width]] to keep top-left at 0,0
+        const mapHeight = 1000;
+        const mapWidth = 1000;
+        const bounds = [[0, 0], [-mapHeight, mapWidth]];
+
+        const image = L.imageOverlay(bgSrc, bounds).addTo(map);
+        map.fitBounds(bounds);
+
+        // --- 4. Create Markers ---
+        
+        // Create Layer Groups for each category
+        categories.forEach(cat => {
+            cat.layerGroup = L.layerGroup().addTo(map);
+            cat.count = 0;
+        });
+
+        // Add markers to appropriate groups
+        markersData.forEach(m => {
+            // Find category by icon URL
+            const cat = categoryMap[m.src];
+            if(cat && cat.layerGroup) {
+                // Project relative coords (0..1) to map coords
+                // Lat (Y) is negative 0 to -1000
+                // Lng (X) is positive 0 to 1000
+                const lat = -1 * m.relY * mapHeight;
+                const lng = m.relX * mapWidth;
+                
+                const icon = L.icon({
+                    iconUrl: m.src,
+                    iconSize: [25, 25],
+                    iconAnchor: [12.5, 12.5], // Center
+                    popupAnchor: [0, -10]
+                });
+
+                L.marker([lat, lng], {icon: icon})
+                 .bindPopup(cat.name)
+                 .addTo(cat.layerGroup);
+                 
+                cat.count++;
+            }
+        });
+
+        // Update UI counts
+        categories.forEach(cat => {
+            if(cat.countElement) {
+                cat.countElement.innerText = `${cat.count}`;
+            }
+        });
+
+        // --- 5. Wire Up Controls ---
+        
+        // Zoom
+        document.getElementById('zoom-in').onclick = (e) => { e.stopPropagation(); map.zoomIn(); };
+        document.getElementById('zoom-out').onclick = (e) => { e.stopPropagation(); map.zoomOut(); };
+
+        // Sidebar Toggle
+        const sidebar = document.getElementById('sidebar-content');
+        document.getElementById('sidebar-toggle').onclick = () => {
+            sidebar.classList.toggle('collapsed');
+        };
+
+        // Prevent clicks on map from sidebar
+        L.DomEvent.disableClickPropagation(sidebar);
+        L.DomEvent.disableScrollPropagation(sidebar);
+    });
+    </script>
+</body>
+</html>

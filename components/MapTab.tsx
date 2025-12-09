@@ -7,7 +7,7 @@ export const MapTab: React.FC = () => {
 
   const map1Url = "https://mapgenie.io/where-winds-meet/maps/world";
   const map2Url = "https://yysls-map.6fast.com/yysls/maps/qinghe?lang=en";
-  const map3Url = "https://boarhat.gg/games/where-winds-meet/interactive-map/";
+  const map3Url = "native_map.html";
 
   return (
     <div className="w-full h-full flex flex-col bg-stone-950">
@@ -44,7 +44,7 @@ export const MapTab: React.FC = () => {
           }`}
         >
           <Compass size={16} />
-          <span className="truncate">BoarHat</span>
+          <span className="truncate">Native Map</span>
         </button>
       </div>
 
@@ -78,7 +78,7 @@ export const MapTab: React.FC = () => {
           />
         </div>
         
-        {/* Map 3: BoarHat */}
+        {/* Map 3: Native Map (Offline) */}
         <div 
             className="w-full h-full"
             style={{ display: activeMap === 'MAP3' ? 'block' : 'none' }}
@@ -86,7 +86,7 @@ export const MapTab: React.FC = () => {
           <iframe 
             src={map3Url}
             className="w-full h-full border-none"
-            title="Where Winds Meet Interactive Map - BoarHat"
+            title="Where Winds Meet Interactive Map - Native"
             sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
           />
         </div>
