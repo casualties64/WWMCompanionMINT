@@ -9,7 +9,7 @@ export const GuideTab: React.FC = () => {
   const GUIDES = [
     { 
         id: 'INTERNAL', 
-        title: 'App Guide (General)', 
+        title: 'General Guide', 
         url: null,
         description: 'Comprehensive general guide for WWM'
     },
@@ -151,7 +151,7 @@ export const GuideTab: React.FC = () => {
             <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-8 animate-in fade-in duration-300 pb-24">
                 {/* Header */}
                 <div className="bg-gradient-to-r from-stone-800 to-stone-900 p-6 rounded-xl border border-stone-700 shadow-lg">
-                    <h1 className="text-2xl md:text-3xl font-bold text-wwm-green mb-2">App Guide (General)</h1>
+                    <h1 className="text-2xl md:text-3xl font-bold text-wwm-green mb-2">General Guide</h1>
                     <p className="text-stone-400 text-sm md:text-base italic">Introduction</p>
                     <p className="text-stone-300 text-sm md:text-base mt-2">
                     This guide focuses on efficiency, scaling, and input precision. It is written for players who want to optimize their account long term instead of guessing or over-farming.
@@ -460,6 +460,8 @@ export const GuideTab: React.FC = () => {
                                 <li>WWMGLyoutube</li>
                                 <li>WWMGLtiktok</li>
                                 <li>WWM251115</li>
+                                <li>YYSLSTIB</li>
+                                <li>WWMDEVTALK</li>
                             </ul>
                         </div>
                         <div className="bg-stone-900/50 border border-stone-800 p-4 rounded opacity-75">

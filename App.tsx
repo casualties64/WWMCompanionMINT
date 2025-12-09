@@ -1,5 +1,6 @@
+
 import React, { useState } from 'react';
-import { Map, ScrollText, Layout, Coffee } from 'lucide-react';
+import { Map, ScrollText, Layout, Coffee, ExternalLink } from 'lucide-react';
 import { Tab } from './types';
 import { MapTab } from './components/MapTab';
 import { XiangqiBoard } from './components/XiangqiBoard';
@@ -64,9 +65,19 @@ const App: React.FC = () => {
             <h1 className="text-2xl sm:text-3xl font-bold tracking-wider text-stone-200 leading-none">
               Where Winds Meet <span className="text-wwm-green">Companion</span>
             </h1>
-            <span className="text-wwm-green font-medium tracking-wide mt-0.5" style={{ fontSize: '0.75em' }}>
-              Created by Panzersmash
-            </span>
+            <div className="flex items-center gap-2 mt-0.5">
+                <span className="text-wwm-green font-medium tracking-wide" style={{ fontSize: '0.75em' }}>
+                  Created by Panzersmash
+                </span>
+                <a 
+                    href="https://www.reddit.com/user/Total-Pride-6491/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 bg-[#ff4500] text-white px-2 py-0.5 rounded-full text-[10px] font-bold hover:bg-[#ff571a] transition-colors"
+                >
+                    <span>Reddit</span> <ExternalLink size={8} />
+                </a>
+            </div>
         </div>
     </div>
   );

@@ -1,13 +1,12 @@
 
 import React, { useState } from 'react';
-import { Globe, Map as MapIcon, Compass } from 'lucide-react';
+import { Globe, Map as MapIcon } from 'lucide-react';
 
 export const MapTab: React.FC = () => {
-  const [activeMap, setActiveMap] = useState<'MAP1' | 'MAP2' | 'MAP3'>('MAP1');
+  const [activeMap, setActiveMap] = useState<'MAP1' | 'MAP2'>('MAP1');
 
   const map1Url = "https://mapgenie.io/where-winds-meet/maps/world";
   const map2Url = "https://yysls-map.6fast.com/yysls/maps/qinghe?lang=en";
-  const map3Url = "native_map.html";
 
   return (
     <div className="w-full h-full flex flex-col bg-stone-950">
@@ -34,17 +33,6 @@ export const MapTab: React.FC = () => {
         >
           <MapIcon size={16} />
           <span className="truncate">6Fast (CN Alt)</span>
-        </button>
-        <button
-          onClick={() => setActiveMap('MAP3')}
-          className={`flex-1 py-3 px-2 md:px-4 text-xs md:text-sm font-bold tracking-wider transition-colors flex items-center justify-center gap-2 ${
-            activeMap === 'MAP3' 
-              ? 'text-wwm-green border-b-2 border-wwm-green bg-stone-800/50' 
-              : 'text-stone-500 hover:text-stone-300 hover:bg-stone-800/30'
-          }`}
-        >
-          <Compass size={16} />
-          <span className="truncate">Native Map</span>
         </button>
       </div>
 
@@ -75,19 +63,6 @@ export const MapTab: React.FC = () => {
             title="Where Winds Meet Interactive Map - 6Fast"
             sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
             referrerPolicy="no-referrer"
-          />
-        </div>
-        
-        {/* Map 3: Native Map (Offline) */}
-        <div 
-            className="w-full h-full"
-            style={{ display: activeMap === 'MAP3' ? 'block' : 'none' }}
-        >
-          <iframe 
-            src={map3Url}
-            className="w-full h-full border-none"
-            title="Where Winds Meet Interactive Map - Native"
-            sandbox="allow-scripts allow-same-origin allow-forms allow-modals"
           />
         </div>
       </div>
