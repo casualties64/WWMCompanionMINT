@@ -1,6 +1,7 @@
 
 export enum Tab {
   MAP = 'MAP',
+  PVP = 'PVP',
   CHESS = 'CHESS',
   GUIDE = 'GUIDE',
   LEGAL = 'LEGAL'
