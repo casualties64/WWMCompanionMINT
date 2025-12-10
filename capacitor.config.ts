@@ -21,7 +21,8 @@ const config: CapacitorConfig = {
       'assets.game8.co',
       'img.game8.co',
       'game8.co',
-      'game8.jp'
+      'game8.jp',
+      'www.wwmcombos.com'
     ]
   }
 };
