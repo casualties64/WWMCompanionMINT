@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,6 +8,8 @@ body {
   background-color: #1c1917;
   color: #e7e5e4;
   margin: 0;
+  /* Prevent bounce effect on iOS */
+  overscroll-behavior-y: none;
 }
 
 /* Custom scrollbar for webkit */
@@ -23,4 +26,18 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #78716c;
+}
+
+/* Mobile Safe Area Utilities */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Improve tap target behavior on mobile */
+button, a {
+  touch-action: manipulation;
 }

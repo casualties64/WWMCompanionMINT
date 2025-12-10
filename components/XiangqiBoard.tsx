@@ -661,9 +661,9 @@ export const XiangqiBoard: React.FC = () => {
       )}
 
       {/* --- Main Board Area --- */}
-      <div className="flex-1 relative flex items-center justify-center p-2 lg:p-8 overflow-y-auto min-h-[500px]">
-        {/* Board Container */}
-        <div className="relative aspect-[9/10] h-full max-h-[800px] w-full max-w-[720px] bg-[#eecfa1] rounded shadow-2xl select-none ring-8 ring-[#5d4037]">
+      <div className="flex-1 relative flex items-center justify-center p-2 lg:p-8 overflow-y-auto min-h-[40vh] lg:min-h-[500px]">
+        {/* Board Container - Dynamic height on mobile to prevent excessive scrolling */}
+        <div className="relative aspect-[9/10] h-full max-h-[800px] w-full max-w-[720px] bg-[#eecfa1] rounded shadow-2xl select-none ring-4 lg:ring-8 ring-[#5d4037]">
             
             {/* Grid & Markings */}
             <div className="absolute inset-0 pointer-events-none">
@@ -712,7 +712,7 @@ export const XiangqiBoard: React.FC = () => {
       </div>
 
       {/* --- Sidebar / Controls --- */}
-      <div className="lg:w-96 w-full bg-stone-950 border-l border-stone-800 flex flex-col shrink-0 lg:h-full z-20 shadow-2xl">
+      <div className="lg:w-96 w-full bg-stone-950 border-l border-stone-800 flex flex-col shrink-0 lg:h-full z-20 shadow-2xl pb-safe">
         
         {/* Header / Status */}
         <div className="p-4 border-b border-stone-800 bg-stone-900/50">

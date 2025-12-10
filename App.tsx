@@ -44,7 +44,7 @@ const App: React.FC = () => {
   }> = ({ onClick, isActive, icon, label }) => {
     const activeClasses = 'text-wwm-green bg-stone-800';
     const inactiveClasses = 'text-stone-500 hover:text-stone-300 hover:bg-stone-800/50';
-    const baseClasses = 'flex flex-col items-center justify-center w-full h-full space-y-1';
+    const baseClasses = 'flex flex-col items-center justify-center w-full h-full space-y-1 transition-colors';
 
     return (
       <button
@@ -60,23 +60,23 @@ const App: React.FC = () => {
   };
 
   const headerContent = (
-    <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full overflow-hidden shrink-0 ring-2 ring-wwm-green/50">
+    <div className="flex items-center gap-3 min-w-0">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden shrink-0 ring-2 ring-wwm-green/50">
           <img src="https://play-lh.googleusercontent.com/C077FpQVnL7G5O6Mowj-sWKdTjUwEWAWxOVQUcBwhHY1yOZePOoIxtlOS5Tn9kIzLoI2eU8BWZ4Nh4ufS63zBg=w240-h480-rw" alt="Where Winds Meet Logo" className="w-full h-full object-cover" />
         </div>
-        <div className="flex flex-col justify-center">
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-wider text-stone-200 leading-none">
-              Where Winds Meet <span className="text-wwm-green">Companion</span>
+        <div className="flex flex-col justify-center min-w-0">
+            <h1 className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-stone-200 leading-none truncate">
+              Winds Meet <span className="text-wwm-green">Companion</span>
             </h1>
             <div className="flex items-center gap-2 mt-0.5">
-              <span className="text-wwm-green font-medium tracking-wide" style={{ fontSize: '0.75em' }}>
+              <span className="text-wwm-green font-medium tracking-wide truncate" style={{ fontSize: '0.75em' }}>
                 Created by Panzersmash
               </span>
               <a 
                 href="https://www.reddit.com/user/Total-Pride-6491/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center bg-[#FF4500] hover:bg-[#e03d00] text-white rounded-full p-1 transition-transform hover:scale-110"
+                className="flex items-center justify-center bg-[#FF4500] hover:bg-[#e03d00] text-white rounded-full p-1 transition-transform hover:scale-110 shrink-0"
                 title="Visit Panzersmash on Reddit"
               >
                 <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -88,13 +88,12 @@ const App: React.FC = () => {
     </div>
   );
 
-  // Default Standalone Layout (Bottom Nav)
   return (
     <div 
-        className="flex flex-col h-screen w-screen bg-stone-900 text-stone-100 font-sans"
-        style={{ backgroundColor: '#1c1917', minHeight: '100vh' }}
+        className="flex flex-col w-screen bg-stone-900 text-stone-100 font-sans h-screen supports-[height:100dvh]:h-[100dvh]"
+        style={{ backgroundColor: '#1c1917' }}
     >
-      <header className="bg-stone-950 border-b border-stone-800 p-3 flex items-center justify-between shrink-0 z-10">
+      <header className="bg-stone-950 border-b border-stone-800 p-3 flex items-center justify-between shrink-0 z-10 pt-safe pl-safe pr-safe">
         {headerContent}
         <div className="flex items-center gap-4">
           <a 
@@ -112,10 +111,10 @@ const App: React.FC = () => {
           </div>
         </div>
       </header>
-      <main className="flex-1 overflow-y-auto overflow-x-hidden relative">
+      <main className="flex-1 overflow-y-auto overflow-x-hidden relative scroll-smooth">
         {renderContent()}
       </main>
-      <nav className="shrink-0 bg-stone-950 border-t border-stone-800 pb-safe">
+      <nav className="shrink-0 bg-stone-950 border-t border-stone-800 pb-safe z-50">
         <div className="flex justify-around items-center h-16">
           <NavButton onClick={() => { setActiveTab(Tab.GUIDE); setLegalView(null); }} isActive={activeTab === Tab.GUIDE} icon={<ScrollText size={20} />} label="Guide" />
           <NavButton onClick={() => { setActiveTab(Tab.MAP); setLegalView(null); }} isActive={activeTab === Tab.MAP} icon={<Map size={20} />} label="Map" />
