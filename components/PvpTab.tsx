@@ -13,7 +13,6 @@ const VideoCard: React.FC<{ id: string; title?: string }> = ({ id, title }) => (
                 allowFullScreen
             />
         </div>
-        {title && <div className="p-3 text-sm font-medium text-stone-300 bg-stone-900/80">{title}</div>}
     </div>
 );
 
