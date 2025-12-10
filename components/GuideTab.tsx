@@ -104,47 +104,6 @@ export const GuideTab: React.FC = () => {
     </div>
   );
 
-  const renderNavButtons = () => (
-      <div className="space-y-3 text-sm">
-          <p className="flex items-start gap-2">
-              <span>👉</span> 
-              <button onClick={() => setActiveGuide('PART1')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                  [CLICK HERE FOR PART1: F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)]
-              </button>
-          </p>
-          <p className="flex items-start gap-2">
-              <span>👉</span> 
-              <button onClick={() => setActiveGuide('PART2')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                  [CLICK HERE FOR PART 2: Gameplay, UI &amp; "No-Grind" Routine]
-              </button>
-          </p>
-          <p className="flex items-start gap-2">
-              <span>👉</span> 
-              <button onClick={() => setActiveGuide('PART3')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                  [CLICK HERE FOR PART 3: Advanced Weapon Reforging(Weapon skins)]
-              </button>
-          </p>
-          <p className="flex items-start gap-2">
-              <span>👉</span> 
-              <button onClick={() => setActiveGuide('PART4')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                  [CLICK HERE FOR PART 4: Where Winds Meet: The Ultimate Merchant Trading Guide (How to Make Serious Money)]
-              </button>
-          </p>
-           <p className="flex items-start gap-2">
-              <span>👉</span> 
-              <button onClick={() => setActiveGuide('PART5')} className="text-left font-bold text-wwm-green hover:text-emerald-400 hover:underline">
-                  [CLICK HERE FOR Part 5: [CN Spoilers] Want to plan your pulls? Here is the complete Cosmetics Roadmap(still update)]
-              </button>
-          </p>
-          <p className="flex items-start gap-2">
-              <span>👉</span> 
-              <a className="text-wwm-green hover:text-emerald-400 hover:underline cursor-pointer font-bold" href="https://www.reddit.com/r/wherewindsmeet_/comments/1p6xsyn/psa_if_you_cant_trigger_a_new_encounterquest_read/" target="_blank" rel="noopener noreferrer">
-                  [PSA] If you can't trigger a new Encounter/Quest, read this (It's not a bug!)
-              </a>
-          </p>
-      </div>
-  );
-
   const renderContent = () => {
     if (activeGuide === 'INTERNAL') {
         return (
@@ -529,22 +488,6 @@ export const GuideTab: React.FC = () => {
                 </p><p>
                   Due to Reddit's post length limit, I cannot add more updates here. I have split the guide into Four parts to cover everything in detail.
                 </p><p>
-                  ---
-                </p><h1 className="text-24-scalable xs:text-20-scalable">⚠️ NAVIGATION INDEX</h1><p>
-                  <strong>👉</strong><a className="relative pointer-events-auto a cursor-pointer underline " href="https://www.reddit.com/r/wherewindsmeet_/comments/1p0w88z/guide_f2p_spending_guide_how_to_maximize_your/" rel="noopener nofollow noreferrer ugc" target="_blank"><strong>[CLICK HERE FOR PART1: F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)]</strong></a>
-                </p><p>
-                  <strong>👉</strong> <a className="relative pointer-events-auto a cursor-pointer underline " href="https://www.reddit.com/r/wherewindsmeet_/comments/1p1ra9a/guide_part_2_how_to_play_efficiently_ui_breakdown/" rel="noopener nofollow noreferrer ugc" target="_blank"><strong>[CLICK HERE FOR PART 2: Gameplay, UI &amp; "No-Grind" Routine]</strong></a>
-                </p><p>
-                  <strong>👉</strong><a className="relative pointer-events-auto a cursor-pointer underline " href="https://www.reddit.com/r/wherewindsmeet_/comments/1p1s0aj/guide_part_3_advanced_weapon_skin_reforging/" rel="noopener nofollow noreferrer ugc" target="_blank"> <strong>[CLICK HERE FOR PART 3: Advanced Weapon Reforging(Weapon skins)]</strong></a>
-                </p><p>
-                  <strong>👉</strong><a className="relative pointer-events-auto a cursor-pointer underline " href="https://www.reddit.com/r/wherewindsmeet_/comments/1p2u0jn/guide_part_4_where_winds_meet_the_ultimate/" rel="noopener nofollow noreferrer ugc" target="_blank"><strong>[CLICK HERE FOR PART 4: Where Winds Meet: The Ultimate Merchant Trading Guide (How to Make Serious Money)</strong></a><strong>]</strong>
-                </p><p>
-                  <strong>👉</strong><a className="relative pointer-events-auto a cursor-pointer underline " href="https://www.reddit.com/r/wherewindsmeet_/comments/1p3is5r/guide_part_5_cn_spoilers_want_to_plan_your_pulls/" rel="noopener nofollow noreferrer ugc" target="_blank"><strong>[CLICK HERE FOR Part 5: [CN Spoilers] Want to plan your pulls? Here is the complete Cosmetics Roadmap(still update)]</strong></a>
-                </p><p>
-                  <strong>👉</strong> <a className="relative pointer-events-auto a cursor-pointer underline " href="https://www.reddit.com/r/wherewindsmeet_/comments/1p6xsyn/psa_if_you_cant_trigger_a_new_encounterquest_read/" rel="noopener nofollow noreferrer ugc" target="_blank"><strong>[PSA] If you can't trigger a new Encounter/Quest, read this (It's not a bug!)</strong></a>
-                </p><p>
-                  ---
-                </p><p>
                   <em>(Original Post Starts Below)</em>
                 </p><h1 className="text-24-scalable xs:text-20-scalable">Intro &amp; Reality Check</h1><p>
                   Hi everyone! I play on the CN server. English isn't my first language, so I'm using AI to help translate.
@@ -578,7 +521,7 @@ export const GuideTab: React.FC = () => {
                   <em><strong>Disclaimer: Please note that things might differ on Global, so treat this as a reference based on CN experience and always check your own server</strong></em>.
                 </p><h1 className="text-24-scalable xs:text-20-scalable">1. The Store &amp; The "50% Off" Trick</h1> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3jrsf41id62g1.png?width=117&format=png&auto=webp&s=a12fe9cabc2a31a0eda46793454a3a03c4f424a2" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3jrsf41id62g1.png?width=117&format=png&auto=webp&s=a12fe9cabc2a31a0eda46793454a3a03c4f424a2" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={117} height="auto" style={{aspectRatio:'117/129'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3jrsf41id62g1.png?width=117&format=png&auto=webp&s=a12fe9cabc2a31a0eda46793454a3a03c4f424a2" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={117} height="auto" style={{aspectRatio:'117/129'}} loading="eager"/>
                         </a>
                   
                 </figure><p>
@@ -623,7 +566,7 @@ export const GuideTab: React.FC = () => {
                   This applies to more than just outfits. Budget-friendly Weapon Skins, Visual Effects, and Mounts are also updated regularly. So even with low spending, you will consistently find affordable items to enjoy.
                 </p><h1 className="text-24-scalable xs:text-20-scalable">2. Echo Jade (Free Currency) - What to Buy vs. Save</h1> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ug3fvb9d62g1.png?width=79&format=png&auto=webp&s=46b5e5fc2f2bada720cd635d993e2fc490770cea" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ug3fvb9d62g1.png?width=79&format=png&auto=webp&s=46b5e5fc2f2bada720cd635d993e2fc490770cea" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={79} height="auto" style={{aspectRatio:'79/71'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ug3fvb9d62g1.png?width=79&format=png&auto=webp&s=46b5e5fc2f2bada720cd635d993e2fc490770cea" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={79} height="auto" style={{aspectRatio:'79/71'}} loading="eager"/>
                         </a>
                   
                 </figure><p>
@@ -642,7 +585,7 @@ export const GuideTab: React.FC = () => {
                 </li>
                   </ul> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-pfkgj5fwg62g1.png?width=195&format=png&auto=webp&s=e1678b401b84d8618e19cb360dd5026f13305e6c" title="Image from r/wherewindsmeet_ - Re-customize your character coupon" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-pfkgj5fwg62g1.png?width=195&format=png&auto=webp&s=e1678b401b84d8618e19cb360dd5026f13305e6c" alt="r/wherewindsmeet_ - Re-customize your character coupon" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={195} height="auto" style={{aspectRatio:'195/265'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-pfkgj5fwg62g1.png?width=195&format=png&auto=webp&s=e1678b401b84d8618e19cb360dd5026f13305e6c" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - Re-customize your character coupon" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={195} height="auto" style={{aspectRatio:'195/265'}} loading="eager"/>
                         </a>
                   <figcaption className="rte-media-caption">Re-customize your character coupon</figcaption>
                 </figure><ul>
@@ -653,30 +596,24 @@ export const GuideTab: React.FC = () => {
                 </li>
                   </ul> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-f03sctzej62g1.png?width=225&format=png&auto=webp&s=813fd3a212a8396c23a3fc907a1f2ea1df1c39fc" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-f03sctzej62g1.png?width=225&format=png&auto=webp&s=813fd3a212a8396c23a3fc907a1f2ea1df1c39fc" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={225} height="auto" style={{aspectRatio:'225/282'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-f03sctzej62g1.png?width=225&format=png&auto=webp&s=813fd3a212a8396c23a3fc907a1f2ea1df1c39fc" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={225} height="auto" style={{aspectRatio:'225/282'}} loading="eager"/>
                         </a>
                   
                 </figure><p>
                   There is a crucial technique called 'Yi Shui Ge'. You must prioritize leveling this skill to maximum rank immediately (ASAP), as it is mandatory for all martial arts builds. You may need to look for it by its icon or translated description if the name differs in the global version, ensuring you can level it up as fast as possible.
                 </p> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-jl0qobfobj2g1.png?width=64&format=png&auto=webp&s=4ccd6317e1f3e1780e1c97bb6582b53bb122ff9d" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-jl0qobfobj2g1.png?width=64&format=png&auto=webp&s=4ccd6317e1f3e1780e1c97bb6582b53bb122ff9d" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={64} height="auto" style={{aspectRatio:'64/81'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-jl0qobfobj2g1.png?width=64&format=png&auto=webp&s=4ccd6317e1f3e1780e1c97bb6582b53bb122ff9d" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={64} height="auto" style={{aspectRatio:'64/81'}} loading="eager"/>
                         </a>
                   
                 </figure> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-us9u1z7pj62g1.png?width=320&format=png&auto=webp&s=abe47f6a42a8899d8152c0807b41364f9a7623de" title="Image from r/wherewindsmeet_ - Find this merchant here.QINGHE" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-us9u1z7pj62g1.png?width=320&format=png&auto=webp&s=abe47f6a42a8899d8152c0807b41364f9a7623de" alt="r/wherewindsmeet_ - Find this merchant here.QINGHE" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={320} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-us9u1z7pj62g1.png?width=320&format=png&auto=webp&s=dde3aec9a9c0c6448c56682a89d220b0f96fe0ba 320w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'320/153'}} loading="eager"/>
-                        </a>
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-us9u1z7pj62g1.png?width=320&format=png&auto=webp&s=abe47f6a42a8899d8152c0807b41364f9a7623de" referrerPolicy="no-referrer" alt="Find this merchant here.QINGHE" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={320} height="auto" style={{aspectRatio:'320/153'}} loading="lazy"/>
                   <figcaption className="rte-media-caption">Find this merchant here.QINGHE</figcaption>
                 </figure> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-vs8z60d2k62g1.png?width=438&format=png&auto=webp&s=fb0ffd5bcf6ffe37410305cc95c457ae324e8b8f" title="Image from r/wherewindsmeet_ - Find this merchant here.KAIFENG" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-vs8z60d2k62g1.png?width=438&format=png&auto=webp&s=fb0ffd5bcf6ffe37410305cc95c457ae324e8b8f" alt="r/wherewindsmeet_ - Find this merchant here.KAIFENG" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={438} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-vs8z60d2k62g1.png?width=320&format=png&auto=webp&s=2c675857e349436654d4af4582ffd4d21b765b23 320w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'438/152'}} loading="eager"/>
-                        </a>
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-vs8z60d2k62g1.png?width=438&format=png&auto=webp&s=fb0ffd5bcf6ffe37410305cc95c457ae324e8b8f" referrerPolicy="no-referrer" alt="Find this merchant here.KAIFENG" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={438} height="auto" style={{aspectRatio:'438/152'}} loading="lazy"/>
                   <figcaption className="rte-media-caption">Find this merchant here.KAIFENG</figcaption>
                 </figure> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-kg4q5ct7k62g1.png?width=451&format=png&auto=webp&s=9dbd99efb89d19499d61b8eec0200bdf5317eea8" title="Image from r/wherewindsmeet_ - Find this merchant here.KaiFeng" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-kg4q5ct7k62g1.png?width=451&format=png&auto=webp&s=9dbd99efb89d19499d61b8eec0200bdf5317eea8" alt="r/wherewindsmeet_ - Find this merchant here.KaiFeng" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={451} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-kg4q5ct7k62g1.png?width=320&format=png&auto=webp&s=c966a78825156007770908e9faf7816a067ad255 320w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'451/164'}} loading="eager"/>
-                        </a>
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-kg4q5ct7k62g1.png?width=451&format=png&auto=webp&s=9dbd99efb89d19499d61b8eec0200bdf5317eea8" referrerPolicy="no-referrer" alt="Find this merchant here.KaiFeng" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={451} height="auto" style={{aspectRatio:'451/164'}} loading="lazy"/>
                   <figcaption className="rte-media-caption">Find this merchant here.KaiFeng</figcaption>
                 </figure><p>
                   <strong>gacha exchange:</strong> you can swap 160 <strong>echo jade</strong> for a standard (blue) pull. you can also swap 200 <strong>echo jade</strong> for a <strong>celestial echo</strong> (gold) pull, but this is limited to 2 per week (it is not unlimited!).
@@ -738,12 +675,12 @@ export const GuideTab: React.FC = () => {
                   <strong>important:</strong> while <strong>special echo</strong> tickets can be bought with pearls, there are several ways to obtain them for free inside the game. you do not strictly need to spend money if you are patient.
                 </p> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-s7bljktce62g1.png?width=90&format=png&auto=webp&s=7380faeac48ecca7611b37f56987d4215d688ebc" title="Image from r/wherewindsmeet_ -  160 Echo Jade" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-s7bljktce62g1.png?width=90&format=png&auto=webp&s=7380faeac48ecca7611b37f56987d4215d688ebc" alt="r/wherewindsmeet_ -  160 Echo Jade" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={90} height="auto" style={{aspectRatio:'90/81'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-s7bljktce62g1.png?width=90&format=png&auto=webp&s=7380faeac48ecca7611b37f56987d4215d688ebc" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ -  160 Echo Jade" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={90} height="auto" style={{aspectRatio:'90/81'}} loading="eager"/>
                         </a>
                   <figcaption className="rte-media-caption"> 160 Echo Jade</figcaption>
                 </figure> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-h7l2c5vhe62g1.png?width=93&format=png&auto=webp&s=f81caa5ac015f41b2bd07f87113b092a5b7d3bd0" title="Image from r/wherewindsmeet_ - Lingering Melody" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-h7l2c5vhe62g1.png?width=93&format=png&auto=webp&s=f81caa5ac015f41b2bd07f87113b092a5b7d3bd0" alt="r/wherewindsmeet_ - Lingering Melody" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={93} height="auto" style={{aspectRatio:'93/90'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-h7l2c5vhe62g1.png?width=93&format=png&auto=webp&s=f81caa5ac015f41b2bd07f87113b092a5b7d3bd0" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - Lingering Melody" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={93} height="auto" style={{aspectRatio:'93/90'}} loading="eager"/>
                         </a>
                   <figcaption className="rte-media-caption">Lingering Melody</figcaption>
                 </figure><p>
@@ -787,9 +724,7 @@ export const GuideTab: React.FC = () => {
                 </p>
                 </li>
                   </ul> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3f3vjxyrh62g1.png?width=447&format=png&auto=webp&s=961e3f775771e3d7478555af47f6c1f79e567aa9" title="Image from r/wherewindsmeet_ - harmonic cores" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3f3vjxyrh62g1.png?width=447&format=png&auto=webp&s=961e3f775771e3d7478555af47f6c1f79e567aa9" alt="r/wherewindsmeet_ - harmonic cores" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={447} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3f3vjxyrh62g1.png?width=320&format=png&auto=webp&s=a151ee200966c8cdd7fc10f5668058d090b4ef99 320w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'447/433'}} loading="eager"/>
-                        </a>
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3f3vjxyrh62g1.png?width=447&format=png&auto=webp&s=961e3f775771e3d7478555af47f6c1f79e567aa9" referrerPolicy="no-referrer" alt="harmonic cores" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={447} height="auto" style={{aspectRatio:'447/433'}} loading="lazy"/>
                   <figcaption className="rte-media-caption">harmonic cores</figcaption>
                 </figure><p>
                   <strong>💡 PRO TIP: The "</strong><em><strong>harmonic cores</strong></em><strong>"&amp; Dismantling</strong>
@@ -844,15 +779,9 @@ export const GuideTab: React.FC = () => {
                   </ol><p>
                   dropping 2 screenshots below so you can see exactly where to click. hope this helps!
                 </p> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-inrtct9lpp3g1.png?width=3781&format=png&auto=webp&s=4ad6772b37827f05be1012c20ade30984c687b7a" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-inrtct9lpp3g1.png?width=3781&format=png&auto=webp&s=4ad6772b37827f05be1012c20ade30984c687b7a" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={750} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-inrtct9lpp3g1.png?width=320&format=png&auto=webp&s=ab8bae21f7ff76b5980107fc8e621e86c175ca08 320w, https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-inrtct9lpp3g1.png?width=640&format=png&auto=webp&s=f8468c7ba1901327a24d44a3848b727c06758c92 640w, https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-inrtct9lpp3g1.png?width=1080&format=png&auto=webp&s=0ef00de546e1e78c7f1a01c380aee6730f06acf0 1080w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'750/358.0402010050251'}} loading="eager"/>
-                        </a>
-                  
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-inrtct9lpp3g1.png?width=3781&format=png&auto=webp&s=4ad6772b37827f05be1012c20ade30984c687b7a" referrerPolicy="no-referrer" alt="recycling example 1" className="mb-0 block w-full my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={750} height="auto" style={{aspectRatio:'750/358.0402010050251'}} loading="lazy"/>
                 </figure> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-8x45kcylpp3g1.png?width=3799&format=png&auto=webp&s=ea1cad18fe47357ef4bcae7b54ab94e85d27d43d" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-8x45kcylpp3g1.png?width=3799&format=png&auto=webp&s=ea1cad18fe47357ef4bcae7b54ab94e85d27d43d" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={750} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-8x45kcylpp3g1.png?width=320&format=png&auto=webp&s=67f317e2df6cf6b31b9e5294cc27fdd093d3304e 320w, https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-8x45kcylpp3g1.png?width=640&format=png&auto=webp&s=c6c4bbd120ee2213f6c053cd760be423c56fa4f7 640w, https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-8x45kcylpp3g1.png?width=1080&format=png&auto=webp&s=c7c3d99552624adf07118393f5613d92cf00b657 1080w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'750/408.85759410371145'}} loading="eager"/>
-                        </a>
-                  
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-8x45kcylpp3g1.png?width=3799&format=png&auto=webp&s=ea1cad18fe47357ef4bcae7b54ab94e85d27d43d" referrerPolicy="no-referrer" alt="recycling example 2" className="mb-0 block w-full my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={750} height="auto" style={{aspectRatio:'750/408.85759410371145'}} loading="lazy"/>
                 </figure><h1 className="text-24-scalable xs:text-20-scalable">4. advanced gacha mechanics: the "hidden pity" &amp; duplicates</h1><p>
                   the gacha rules recently got an upgrade on cn. the wording is confusing, so here is the simple breakdown of how the safety net works for the limited echo jade banner (outfits).
                 </p><p>
@@ -902,17 +831,14 @@ export const GuideTab: React.FC = () => {
                   </ul>
                 </li>
                   </ul> <figure className="rte-media">
-                   <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-y4gdlr8qf62g1.png?width=463&format=png&auto=webp&s=67ddf8600efeb7231e959316f08688e8d0a1a367" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-y4gdlr8qf62g1.png?width=463&format=png&auto=webp&s=67ddf8600efeb7231e959316f08688e8d0a1a367" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={463} height="auto" srcSet="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-y4gdlr8qf62g1.png?width=320&format=png&auto=webp&s=f5faec91dfcd1416c58aec2a82ac9427e199a9ac 320w" sizes="(min-width: 1415px) 750px, (min-width: 768px) 50vw, 100vw" style={{aspectRatio:'463/338'}} loading="eager"/>
-                        </a>
-                  
+                   <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-y4gdlr8qf62g1.png?width=463&format=png&auto=webp&s=67ddf8600efeb7231e959316f08688e8d0a1a367" referrerPolicy="no-referrer" alt="gacha duplicates" className="mb-0 block w-full my-0 mx-auto max-w-[100%] rounded-lg shadow-lg" width={463} height="auto" style={{aspectRatio:'463/338'}} loading="lazy"/>
                 </figure><h1 className="text-24-scalable xs:text-20-scalable">5. The Dye System: F2P vs. Premium &amp; How to Farm</h1><p>
                   Customization is huge in this game. The dye system is split into two tiers: <strong>Basic (Low Saturation)</strong> and <strong>Premium (High Saturation)</strong>.
                 </p><p>
                   <strong>A. Clothing Dyes (10 powders per dye)</strong>
                 </p> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ido9dqdf62g1.png?width=101&format=png&auto=webp&s=bf12958d70e3e99061c59158c609049bde3bb5e8" title="Image from r/wherewindsmeet_ - Basic Dye" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ido9dqdf62g1.png?width=101&format=png&auto=webp&s=bf12958d70e3e99061c59158c609049bde3bb5e8" alt="r/wherewindsmeet_ - Basic Dye" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={101} height="auto" style={{aspectRatio:'101/102'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-3ido9dqdf62g1.png?width=101&format=png&auto=webp&s=bf12958d70e3e99061c59158c609049bde3bb5e8" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - Basic Dye" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={101} height="auto" style={{aspectRatio:'101/102'}} loading="eager"/>
                         </a>
                   <figcaption className="rte-media-caption">Basic Dye</figcaption>
                 </figure><p>
@@ -987,7 +913,7 @@ export const GuideTab: React.FC = () => {
                 </li>
                   </ul> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hkr78ia0f62g1.png?width=105&format=png&auto=webp&s=7e8b151e1914d3afcb33b1b4b2e6982cc4e946e1" title="Image from r/wherewindsmeet_ - Advanced dyes" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hkr78ia0f62g1.png?width=105&format=png&auto=webp&s=7e8b151e1914d3afcb33b1b4b2e6982cc4e946e1" alt="r/wherewindsmeet_ - Advanced dyes" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={105} height="auto" style={{aspectRatio:'105/102'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hkr78ia0f62g1.png?width=105&format=png&auto=webp&s=7e8b151e1914d3afcb33b1b4b2e6982cc4e946e1" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - Advanced dyes" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={105} height="auto" style={{aspectRatio:'105/102'}} loading="eager"/>
                         </a>
                   <figcaption className="rte-media-caption">Advanced dyes</figcaption>
                 </figure><p>
@@ -1082,14 +1008,14 @@ export const GuideTab: React.FC = () => {
                   <strong>⚠️ Advice:</strong> Do NOT buy it with Pearls right now! It is highly likely that the Monthly Pass shop will be updated in the future. If you buy it with Pearls now, you might regret wasting premium currency when you could have bought it with free Jade later.
                 </p> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hz4oq5yhw82g1.png?width=272&format=png&auto=webp&s=bd669807cbeaae74c6a24ceb029d7eb9d8dbd7ce" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hz4oq5yhw82g1.png?width=272&format=png&auto=webp&s=bd669807cbeaae74c6a24ceb029d7eb9d8dbd7ce" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={272} height="auto" style={{aspectRatio:'272/286'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-hz4oq5yhw82g1.png?width=272&format=png&auto=webp&s=bd669807cbeaae74c6a24ceb029d7eb9d8dbd7ce" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={272} height="auto" style={{aspectRatio:'272/286'}} loading="eager"/>
                         </a>
                   
                 </figure><p>
                   <strong>B. Hair Dyes (10 pastes per dye)</strong>
                 </p> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-4lpbz0d1f62g1.png?width=121&format=png&auto=webp&s=4e9ac02b67c8727fab2f8f940cc29f8310c7a414" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-4lpbz0d1f62g1.png?width=121&format=png&auto=webp&s=4e9ac02b67c8727fab2f8f940cc29f8310c7a414" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={121} height="auto" style={{aspectRatio:'121/108'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-4lpbz0d1f62g1.png?width=121&format=png&auto=webp&s=4e9ac02b67c8727fab2f8f940cc29f8310c7a414" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={121} height="auto" style={{aspectRatio:'121/108'}} loading="eager"/>
                         </a>
                   
                 </figure><p>
@@ -1124,7 +1050,7 @@ export const GuideTab: React.FC = () => {
                 </li>
                   </ol> <figure className="rte-media">
                    <a href="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-0rl7bsi9f62g1.png?width=118&format=png&auto=webp&s=4d21e224cf46773e05caa4f41a45bd19924651eb" title="Image from r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" rel="noopener noreferrer ugc" target="_blank">
-                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-0rl7bsi9f62g1.png?width=118&format=png&auto=webp&s=4d21e224cf46773e05caa4f41a45bd19924651eb" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={118} height="auto" style={{aspectRatio:'118/125'}} loading="eager"/>
+                          <img src="https://preview.redd.it/guide-f2p-spending-guide-how-to-maximize-your-jade-coupons-v0-0rl7bsi9f62g1.png?width=118&format=png&auto=webp&s=4d21e224cf46773e05caa4f41a45bd19924651eb" referrerPolicy="no-referrer" alt="r/wherewindsmeet_ - [Guide] F2P &amp; Spending Guide: How to maximize your Jade, Coupons, and Gacha (CN Experience)" className="mb-0 block w-fit my-0 mx-auto max-w-[100%] non-lightboxed-content" width={118} height="auto" style={{aspectRatio:'118/125'}} loading="eager"/>
                         </a>
                   
                 </figure><ul>
@@ -1335,17 +1261,6 @@ export const GuideTab: React.FC = () => {
     
     const renderPart2 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED PART 1?</h1>
-            <p>This is <strong>Part 2</strong> of the guide, focusing on Gameplay Loops, UI, and Crafting.</p>
-            <p>If you want to know about <strong>Monetization, Gacha Economy, and Spending Tips</strong>, please check Part 1 below:</p>
-            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
-            <hr className="border-stone-700" />
-            <h1 className="text-2xl font-bold pt-4 text-white">IN THIS POST (PART 2):</h1>
-            <ul className="list-disc pl-5 space-y-1">
-                <li>Seasonal Resets: Why P2W is impossible (Detailed Breakdown).</li>
-                <li>The "No-Grind" Routine: How to finish weekly tasks in 30 mins.</li>
-                <li>UI Translation: Full breakdown of the menus based on CN experience.</li>
-            </ul>
             <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">1. Seasonal Resets: The "No P2W" Structure &amp; Casual Friendliness</h1>
             <p>WWM operates on a Seasonal Model (similar to ARPGs like Diablo or Path of Exile). This is the core reason why Pay-to-Win does not exist for combat power here: Gear must be earned through gameplay.</p>
             <ul className="list-disc pl-5 my-4"><li>Duration: Approx. 3 months per season.</li></ul>
@@ -1378,8 +1293,8 @@ export const GuideTab: React.FC = () => {
             </div>
             <h2 className="text-xl font-bold text-white mt-8">B. The "Catch-Up" Mechanism (Season Shop)</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-                <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-q8v7lwp3gf2g1.png?width=742&format=png&auto=webp&s=4fbfe17d210fc29feed771ccbfbd88fe78f0775f" alt="Season Shop" className="rounded shadow border border-stone-700 w-full" />
-                <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-curf6ml5gf2g1.png?width=1080&crop=smart&auto=webp&s=8f868013bfbfc282e4bb8f59fc74d6334e632f97" alt="Season Shop UI" className="rounded shadow border border-stone-700 w-full object-cover" />
+                <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-q8v7lwp3gf2g1.png?width=742&format=png&auto=webp&s=4fbfe17d210fc29feed771ccbfbd88fe78f0775f" referrerPolicy="no-referrer" alt="Season Shop" className="rounded shadow border border-stone-700 w-full" />
+                <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-curf6ml5gf2g1.png?width=1080&crop=smart&auto=webp&s=8f868013bfbfc282e4bb8f59fc74d6334e632f97" referrerPolicy="no-referrer" alt="Season Shop UI" className="rounded shadow border border-stone-700 w-full object-cover" />
             </div>
             <ul className="list-disc pl-5 space-y-2">
                 <li><strong>The Fear:</strong> "If I start late, will I be behind forever?"</li>
@@ -1393,7 +1308,7 @@ export const GuideTab: React.FC = () => {
                 <li>The Rule: You have a Weekly Cap of 22,000 Points.</li>
                 <li>Flexibility: You can fill this bar whenever you want. Grind it all on Monday, or spread it out over the weekend. Once you hit 22k, you are done for the week!</li>
             </ul>
-            <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-164g76xjhf2g1.png?width=1080&crop=smart&auto=webp&s=e2f641c5fe27d8a940927f9873fe730a133fd8ad" alt="Weekly Progress Bar" className="rounded shadow border border-stone-700 w-full my-4" />
+            <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-164g76xjhf2g1.png?width=1080&crop=smart&auto=webp&s=e2f641c5fe27d8a940927f9873fe730a133fd8ad" referrerPolicy="no-referrer" alt="Weekly Progress Bar" className="rounded shadow border border-stone-700 w-full my-4" />
             <h2 className="text-xl font-bold text-white">HOW TO FILL THE BAR (2 METHODS)</h2>
             <p className="mt-2"><strong className="text-white">METHOD A: THE NATURAL WAY (JUST PLAY)</strong> For most players, the bar fills up automatically as you:</p>
             <ul className="list-disc pl-5 my-2">
@@ -1414,7 +1329,7 @@ export const GuideTab: React.FC = () => {
                 </li>
             </ol>
             <p className="text-sm italic text-stone-400"><strong>Note:</strong> The <strong>Weekly Discounted Gacha Ticket</strong> (Price: 200 Jade) can only be purchased <em>after</em> you fill this progress bar. The Season Shop also sells critical upgrade materials using these 22,000 points as currency—<strong>buy them all every week!</strong></p>
-            <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-h3ivci6uif2g1.png?width=615&format=png&auto=webp&s=484598c662c9c258a18c449d2685157a7807b94f" alt="Weekly Gacha Ticket" className="rounded shadow border border-stone-700 my-4 max-w-md mx-auto" />
+            <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-h3ivci6uif2g1.png?width=615&format=png&auto=webp&s=484598c662c9c258a18c449d2685157a7807b94f" referrerPolicy="no-referrer" alt="Weekly Gacha Ticket" className="rounded shadow border border-stone-700 my-4 max-w-md mx-auto" />
             <h1 className="text-2xl font-bold mt-8 mb-4 text-wwm-green border-b border-stone-700 pb-2">3. Game UI Disassembly (Where to Click)</h1>
             <div className="space-y-4">
                 <p><strong>1. Bags (Inventory)</strong></p>
@@ -1430,7 +1345,7 @@ export const GuideTab: React.FC = () => {
                     <li>Exchange: Dismantle duplicate Skill Books to buy the specific S-Tier books you need.</li>
                     <li>Exploration Stats: Shows stats like Alcohol Tolerance or Elegance. Raise these by interacting with the world (Drinking, Petting Cats), not fighting.</li>
                 </ul>
-                <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-99ty7khujf2g1.png?width=535&format=png&auto=webp&s=8236d95f78474538a6cd7526350d7adb2dfd0106" alt="Exploration Stats" className="rounded shadow border border-stone-700 my-4 max-w-sm mx-auto" />
+                <img src="https://preview.redd.it/guide-part-2-how-to-play-efficiently-ui-breakdown-daily-v0-99ty7khujf2g1.png?width=535&format=png&auto=webp&s=8236d95f78474538a6cd7526350d7adb2dfd0106" referrerPolicy="no-referrer" alt="Exploration Stats" className="rounded shadow border border-stone-700 my-4 max-w-sm mx-auto" />
                 <p><strong>3. Appearance</strong></p>
                 <ul className="list-disc pl-5 space-y-1">
                     <li><strong>Wardrobe:</strong> Equip Outfits, Weapon Skins, and Mounts.</li>
@@ -1477,10 +1392,6 @@ export const GuideTab: React.FC = () => {
     
     const renderPart3 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION]</h1>
-            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
-            <hr className="border-stone-700 my-4" />
-
             <h1 className="text-2xl font-bold text-red-500 mb-4 flex items-center gap-2">⚠️ STOP! READ THIS FIRST! ⚠️</h1>
             <div className="bg-red-900/20 border border-red-800 p-4 rounded-lg space-y-2 mb-6">
                 <p>Before you touch this system, understand three things:</p>
@@ -1643,16 +1554,12 @@ export const GuideTab: React.FC = () => {
 
     const renderPart4 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED A PART?</h1>
-            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
-            <hr className="border-stone-700 my-4" />
-
             <div className="bg-stone-800 p-4 rounded border-l-4 border-wwm-green italic text-sm mb-6">
                 <strong>Disclaimer:</strong> This article is based on CN experience. If there are any changes globally, please refer to the current server for the most up-to-date information.
             </div>
 
             <div className="flex justify-center my-4">
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-2hc3ap2h7r2g1.png?width=204&format=png&auto=webp&s=dee04023a213b4b5292d31adaafcf62f2d7ffb51" className="rounded-lg shadow-lg border border-stone-700" alt="Trade Office" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-2hc3ap2h7r2g1.png?width=204&format=png&auto=webp&s=dee04023a213b4b5292d31adaafcf62f2d7ffb51" referrerPolicy="no-referrer" className="rounded-lg shadow-lg border border-stone-700" alt="Trade Office" />
             </div>
 
             <div className="space-y-4">
@@ -1663,9 +1570,9 @@ export const GuideTab: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-6">
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-mdhgx0sm3l2g1.jpg?width=1080&format=pjpg&auto=webp&s=8ef4259300fca44a36f7e88cb4a1b39670c2ce95" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 1" />
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-v0i6ap0v3l2g1.jpg?width=1080&format=pjpg&auto=webp&s=cf081b816119e999755db3e9910c44662233c2e6" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 2" />
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-3dxwb3a04l2g1.jpg?width=1440&format=pjpg&auto=webp&s=6b9a85eb4d00b30c1f7988c1e19cf03012440ab0" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 3" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-mdhgx0sm3l2g1.jpg?width=1080&format=pjpg&auto=webp&s=8ef4259300fca44a36f7e88cb4a1b39670c2ce95" referrerPolicy="no-referrer" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 1" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-v0i6ap0v3l2g1.jpg?width=1080&format=pjpg&auto=webp&s=cf081b816119e999755db3e9910c44662233c2e6" referrerPolicy="no-referrer" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 2" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-3dxwb3a04l2g1.jpg?width=1440&format=pjpg&auto=webp&s=6b9a85eb4d00b30c1f7988c1e19cf03012440ab0" referrerPolicy="no-referrer" className="w-full h-48 object-cover rounded-lg border border-stone-700" alt="Mansion 3" />
             </div>
 
             <p>Merchant Runs are one of the most important ways to earn Commerce Coins. However, it is not just about buying low and selling high. If you do not prepare your inventory space first, you will miss out on massive profits.</p>
@@ -1674,8 +1581,8 @@ export const GuideTab: React.FC = () => {
             <p className="text-white font-bold my-4">➡️ First, go here.</p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-x5t3prfgx33g1.png?width=2089&format=png&auto=webp&s=a7dd51f558df652c17881fde211aacfb2a7435b0" className="w-full rounded border border-stone-700" alt="Location Map" />
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-qsq6opeeuk2g1.png?width=1022&format=png&auto=webp&s=48f38053f906afbad67ca920dc7d29fe0b89657b" className="w-full rounded border border-stone-700" alt="NPC Interaction" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-x5t3prfgx33g1.png?width=2089&format=png&auto=webp&s=a7dd51f558df652c17881fde211aacfb2a7435b0" referrerPolicy="no-referrer" className="w-full rounded border border-stone-700" alt="Location Map" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-qsq6opeeuk2g1.png?width=1022&format=png&auto=webp&s=48f38053f906afbad67ca920dc7d29fe0b89657b" referrerPolicy="no-referrer" className="w-full rounded border border-stone-700" alt="NPC Interaction" />
             </div>
 
             <div className="bg-stone-900/50 p-4 rounded border border-stone-800 space-y-4">
@@ -1703,8 +1610,8 @@ export const GuideTab: React.FC = () => {
             <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Step 2: Understanding Market Mechanics</h1>
             <p>Go to the Trade Office and talk to the NPC Zhang Qiyue.</p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-4">
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-3nrgj15guk2g1.png?width=2205&format=png&auto=webp&s=51d521687b1fe2ac6e1f1551f35ea717ffb63b42" className="w-full rounded border border-stone-700" />
-                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-7jvca5sfuk2g1.png?width=862&format=png&auto=webp&s=7cb9b070ab71cc3a6726f239b44d79c2ae82ccbb" className="w-full rounded border border-stone-700" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-3nrgj15guk2g1.png?width=2205&format=png&auto=webp&s=51d521687b1fe2ac6e1f1551f35ea717ffb63b42" referrerPolicy="no-referrer" className="w-full rounded border border-stone-700" />
+                <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-7jvca5sfuk2g1.png?width=862&format=png&auto=webp&s=7cb9b070ab71cc3a6726f239b44d79c2ae82ccbb" referrerPolicy="no-referrer" className="w-full rounded border border-stone-700" />
             </div>
 
             <div className="space-y-4">
@@ -1724,7 +1631,7 @@ export const GuideTab: React.FC = () => {
                 </div>
             </div>
 
-            <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-jm739dffuk2g1.png?width=3610&format=png&auto=webp&s=9d420539ff48266a2d101ee99b35bf78125ced50" className="w-full rounded-lg border border-stone-700 my-4" alt="Market Analysis" />
+            <img src="https://preview.redd.it/guide-part-4-where-winds-meet-the-ultimate-merchant-trading-v0-jm739dffuk2g1.png?width=3610&format=png&auto=webp&s=9d420539ff48266a2d101ee99b35bf78125ced50" referrerPolicy="no-referrer" className="w-full rounded-lg border border-stone-700 my-4" alt="Market Analysis" />
 
             <h1 className="text-2xl font-bold text-wwm-green border-b border-stone-700 pb-2 mt-8">Step 3: The Golden Weekly Schedule</h1>
             <p>The trading cycle runs from Saturday 6:00 AM to the next Saturday 6:00 AM.</p>
@@ -1774,10 +1681,6 @@ export const GuideTab: React.FC = () => {
 
     const renderPart5 = () => (
         <div className="max-w-5xl mx-auto w-full p-4 lg:p-8 space-y-6 animate-in fade-in duration-300 pb-24 text-stone-300">
-            <h1 className="text-2xl font-bold text-wwm-green">[NAVIGATION] MISSED A PART?</h1>
-            <div className="mt-4 p-4 bg-stone-800/50 rounded-lg border border-stone-700">{renderNavButtons()}</div>
-            <hr className="border-stone-700 my-4" />
-
             <div className="bg-stone-800 p-6 rounded-lg text-center space-y-4">
                 <h1 className="text-3xl font-bold text-wwm-green">Part 5: Cosmetics Roadmap [CN Spoilers]</h1>
                 <p className="text-stone-300 max-w-2xl mx-auto">
