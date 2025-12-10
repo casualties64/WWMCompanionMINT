@@ -34,7 +34,7 @@ export const PvpTab: React.FC = () => {
                     }`}
                 >
                     <Swords size={18} />
-                    <span>Combos</span>
+                    <span className="truncate">Combos (www.wwmcombos.com)</span>
                 </button>
                 <button
                     onClick={() => setSubTab('VIDEOS')}
