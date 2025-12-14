@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BoardState, PieceColor, PieceType, Piece } from '../types';
 import { getBestMove, boardToFen, initEngine, EngineResult } from '../services/xiangqiEngine';
-import { Loader2, RefreshCw, Trash2, ArrowRight, Zap, AlertCircle, Sparkles, Wrench, Hand, Trophy, Cpu } from 'lucide-react';
+import { Loader2, RefreshCw, Trash2, ArrowRight, Zap, AlertCircle, Sparkles, Wrench, Hand, Trophy, Cpu, Settings2 } from 'lucide-react';
 
 const INITIAL_BOARD: BoardState = {
   // Black (Top)
@@ -326,6 +326,7 @@ export const XiangqiBoard: React.FC = () => {
   const [analysisResult, setAnalysisResult] = useState<EngineResult | null>(null);
   
   const [autoAnalyze, setAutoAnalyze] = useState(false);
+  const [searchDepth, setSearchDepth] = useState(20); // Default to 20 as requested
   const isAnalyzingRef = useRef(false);
 
   // Setup Mode State
@@ -353,7 +354,7 @@ export const XiangqiBoard: React.FC = () => {
     const fenToAnalyze = boardToFen(board, turn);
 
     try {
-        const result = await getBestMove(fenToAnalyze, turn, 7);
+        const result = await getBestMove(fenToAnalyze, turn, searchDepth);
         
         if (result) {
             setAnalysisResult(result);
@@ -743,19 +744,42 @@ export const XiangqiBoard: React.FC = () => {
 
              {/* Auto-Suggest Toggle */}
              {!setupMode && !winner && (
-                 <div className="flex items-center justify-between bg-stone-900 p-3 rounded-lg border border-stone-800 mb-2">
-                    <span className="text-sm text-stone-300 font-medium">Auto-Suggest</span>
-                    <button 
-                        onClick={() => {
-                            const newState = !autoAnalyze;
-                            setAutoAnalyze(newState);
-                            if (newState && turn === PieceColor.RED) handleAnalyze();
-                            else if (!newState) setAnalysisResult(null);
-                        }}
-                        className={`relative w-11 h-6 rounded-full transition-colors duration-200 ease-in-out focus:outline-none shrink-0 ${autoAnalyze ? 'bg-wwm-green' : 'bg-stone-700'}`}
-                    >
-                        <span className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out ${autoAnalyze ? 'translate-x-5' : 'translate-x-0'}`} />
-                    </button>
+                 <div className="flex flex-col gap-2 mb-2">
+                     <div className="flex items-center justify-between bg-stone-900 p-3 rounded-lg border border-stone-800">
+                        <span className="text-sm text-stone-300 font-medium">Auto-Suggest</span>
+                        <button 
+                            onClick={() => {
+                                const newState = !autoAnalyze;
+                                setAutoAnalyze(newState);
+                                if (newState && turn === PieceColor.RED) handleAnalyze();
+                                else if (!newState) setAnalysisResult(null);
+                            }}
+                            className={`relative w-11 h-6 rounded-full transition-colors duration-200 ease-in-out focus:outline-none shrink-0 ${autoAnalyze ? 'bg-wwm-green' : 'bg-stone-700'}`}
+                        >
+                            <span className={`absolute left-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 ease-in-out ${autoAnalyze ? 'translate-x-5' : 'translate-x-0'}`} />
+                        </button>
+                     </div>
+
+                     {/* Depth Control */}
+                     <div className="flex items-center justify-between bg-stone-900 p-3 rounded-lg border border-stone-800">
+                        <div className="flex flex-col">
+                            <span className="text-sm text-stone-300 font-medium flex items-center gap-2"><Settings2 size={14}/> Search Depth</span>
+                            <span className="text-[10px] text-stone-500">Higher = Stronger but Slower</span>
+                        </div>
+                        <div className="flex items-center bg-stone-950 rounded-lg border border-stone-800 p-1">
+                            <button 
+                                onClick={() => setSearchDepth(d => Math.max(1, d - 1))}
+                                disabled={isAnalyzing}
+                                className="w-8 h-6 flex items-center justify-center text-stone-400 hover:text-white hover:bg-stone-800 rounded transition-colors disabled:opacity-50"
+                            >-</button>
+                            <span className="w-8 text-center text-wwm-green font-mono font-bold text-sm">{searchDepth}</span>
+                            <button 
+                                onClick={() => setSearchDepth(d => Math.min(25, d + 1))}
+                                disabled={isAnalyzing}
+                                className="w-8 h-6 flex items-center justify-center text-stone-400 hover:text-white hover:bg-stone-800 rounded transition-colors disabled:opacity-50"
+                            >+</button>
+                        </div>
+                     </div>
                  </div>
              )}
              
@@ -763,7 +787,7 @@ export const XiangqiBoard: React.FC = () => {
              {autoAnalyze && !winner && !setupMode && (
                  <div className="text-xs text-center mt-2 font-mono">
                      {isAnalyzing ? (
-                         <span className="text-wwm-green animate-pulse flex items-center justify-center gap-2"><Loader2 size={12} className="animate-spin"/> Engine Calculating...</span>
+                         <span className="text-wwm-green animate-pulse flex items-center justify-center gap-2"><Loader2 size={12} className="animate-spin"/> Thinking (Depth {searchDepth})...</span>
                      ) : analysisError ? (
                          <span className="text-red-400 flex items-center justify-center gap-2"><AlertCircle size={12}/> Analysis failed. Retrying...</span>
                      ) : turn === PieceColor.BLACK ? (
@@ -826,7 +850,8 @@ export const XiangqiBoard: React.FC = () => {
                     {isAnalyzing && !analysisResult ? (
                         <div className="h-40 flex flex-col items-center justify-center text-stone-500 space-y-3">
                             <Loader2 className="animate-spin text-wwm-green" size={32} />
-                            <p className="text-sm font-medium">Wukong is calculating...</p>
+                            <p className="text-sm font-medium">Wukong is calculating (Depth {searchDepth})...</p>
+                            {searchDepth > 12 && <p className="text-xs text-yellow-500/80">High depth may take longer</p>}
                         </div>
                     ) : analysisResult ? (
                         <div className="bg-stone-900/80 p-5 rounded-xl border border-stone-800 animate-in fade-in slide-in-from-bottom-2">
@@ -885,7 +910,7 @@ export const XiangqiBoard: React.FC = () => {
                             className="w-full py-4 bg-gradient-to-r from-emerald-700 to-wwm-green hover:from-emerald-600 hover:to-wwm-green text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-emerald-900/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                         >
                             {isAnalyzing ? <Loader2 className="animate-spin" /> : <Zap className="group-hover:text-emerald-100 transition-colors" />}
-                            {analysisError ? "Retry Analysis" : "Analyze Position"}
+                            {analysisError ? "Retry Analysis" : `Analyze Position (Depth ${searchDepth})`}
                         </button>
                     )}
                 </div>
