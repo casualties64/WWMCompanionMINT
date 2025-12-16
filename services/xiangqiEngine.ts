@@ -1,5 +1,4 @@
 
-
 import { BoardState, PieceColor } from '../types';
 
 // Types for the engine response
@@ -76,6 +75,11 @@ export const initEngine = () => {
                 
                 let engine = new Engine();
                 
+                // OPTIMIZATION: Increase Hash Table size to 128MB.
+                // This allows the engine to remember significantly more positions, 
+                // preventing recalculation and speeding up depth 18-22 searches.
+                engine.setHashSize(128);
+
                 // Override console.log to send messages back to the main thread
                 self.console = {
                     ...self.console,
@@ -95,6 +99,19 @@ export const initEngine = () => {
                             self.postMessage({ type: 'error', data: 'Engine not initialized.' });
                             return;
                         }
+                        
+                        // Set Time Control if provided
+                        if (payload.timeLimit) {
+                            engine.setTimeControl({
+                                timeSet: 1,
+                                time: payload.timeLimit,
+                                stopTime: Date.now() + payload.timeLimit,
+                                stopped: 0
+                            });
+                        } else {
+                            engine.resetTimeControl();
+                        }
+
                         engine.setBoard(payload.fen);
                         engine.search(payload.depth);
                     }
@@ -110,7 +127,7 @@ export const initEngine = () => {
                 const { type, data } = e.data;
                 if (type === 'ready') {
                     isReady = true;
-                    console.log("[Wukong Engine] Ready!");
+                    console.log("[Wukong Engine] Ready! Hash size optimized to 128MB.");
                 } else if (type === 'log') {
                     handleEngineOutput(data);
                 } else if (type === 'error') {
@@ -261,7 +278,8 @@ const finalizeResult = (): EngineResult | null => {
     return result;
 };
 
-export const getBestMove = async (fen: string, turn: PieceColor, depth: number = 7): Promise<EngineResult | null> => {
+// Added timeLimit parameter (default 5000ms)
+export const getBestMove = async (fen: string, turn: PieceColor, depth: number = 10, timeLimit: number = 5000): Promise<EngineResult | null> => {
     await initEngine();
 
     if (!isReady || !engineWorker) {
@@ -278,7 +296,7 @@ export const getBestMove = async (fen: string, turn: PieceColor, depth: number =
 
     return new Promise((resolve) => {
         currentAnalysisRequest = { fen, turn, resolve };
-        engineWorker!.postMessage({ type: 'analyze', payload: { fen, depth } });
+        engineWorker!.postMessage({ type: 'analyze', payload: { fen, depth, timeLimit } });
     });
 };
 

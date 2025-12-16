@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { BoardState, PieceColor, PieceType, Piece } from '../types';
 import { getBestMove, boardToFen, initEngine, EngineResult } from '../services/xiangqiEngine';
-import { Loader2, RefreshCw, Trash2, ArrowRight, Zap, AlertCircle, Sparkles, Wrench, Hand, Trophy, Cpu, Settings2 } from 'lucide-react';
+import { Loader2, RefreshCw, Trash2, ArrowRight, Zap, AlertCircle, Sparkles, Wrench, Hand, Trophy, Cpu, Settings2, Timer } from 'lucide-react';
 
 const INITIAL_BOARD: BoardState = {
   // Black (Top)
@@ -326,7 +326,8 @@ export const XiangqiBoard: React.FC = () => {
   const [analysisResult, setAnalysisResult] = useState<EngineResult | null>(null);
   
   const [autoAnalyze, setAutoAnalyze] = useState(false);
-  const [searchDepth, setSearchDepth] = useState(20); // Default to 20 as requested
+  const [searchDepth, setSearchDepth] = useState(20); // Default set to 20 as requested
+  const [maxTime, setMaxTime] = useState(10000); // 10s default
   const isAnalyzingRef = useRef(false);
 
   // Setup Mode State
@@ -354,13 +355,15 @@ export const XiangqiBoard: React.FC = () => {
     const fenToAnalyze = boardToFen(board, turn);
 
     try {
-        const result = await getBestMove(fenToAnalyze, turn, searchDepth);
+        // Use auto-suggest time (fast) if auto-mode, otherwise use selected maxTime
+        const limit = autoAnalyze ? 2000 : maxTime;
+        const result = await getBestMove(fenToAnalyze, turn, searchDepth, limit);
         
         if (result) {
             setAnalysisResult(result);
             setAnalysisError(false);
         } else {
-            console.warn("Analysis returned null, likely an engine error or invalid position.");
+            console.warn("Analysis returned null.");
             setAnalysisError(true);
             if (!autoAnalyze) setAnalysisResult(null);
         }
@@ -746,7 +749,7 @@ export const XiangqiBoard: React.FC = () => {
              {!setupMode && !winner && (
                  <div className="flex flex-col gap-2 mb-2">
                      <div className="flex items-center justify-between bg-stone-900 p-3 rounded-lg border border-stone-800">
-                        <span className="text-sm text-stone-300 font-medium">Auto-Suggest</span>
+                        <span className="text-sm text-stone-300 font-medium">Auto-Suggest (Fast)</span>
                         <button 
                             onClick={() => {
                                 const newState = !autoAnalyze;
@@ -760,24 +763,42 @@ export const XiangqiBoard: React.FC = () => {
                         </button>
                      </div>
 
-                     {/* Depth Control */}
-                     <div className="flex items-center justify-between bg-stone-900 p-3 rounded-lg border border-stone-800">
-                        <div className="flex flex-col">
-                            <span className="text-sm text-stone-300 font-medium flex items-center gap-2"><Settings2 size={14}/> Search Depth</span>
-                            <span className="text-[10px] text-stone-500">Higher = Stronger but Slower</span>
+                     {/* Settings Grid */}
+                     <div className="grid grid-cols-2 gap-2">
+                        {/* Depth Control */}
+                        <div className="flex flex-col bg-stone-900 p-3 rounded-lg border border-stone-800">
+                            <span className="text-xs text-stone-400 font-medium flex items-center gap-1 mb-2"><Settings2 size={12}/> Search Depth</span>
+                            <div className="flex items-center bg-stone-950 rounded-lg border border-stone-800 p-1 justify-between">
+                                <button 
+                                    onClick={() => setSearchDepth(d => Math.max(1, d - 1))}
+                                    disabled={isAnalyzing}
+                                    className="w-6 h-6 flex items-center justify-center text-stone-400 hover:text-white hover:bg-stone-800 rounded transition-colors disabled:opacity-50"
+                                >-</button>
+                                <span className="text-center text-wwm-green font-mono font-bold text-sm">{searchDepth}</span>
+                                <button 
+                                    onClick={() => setSearchDepth(d => Math.min(25, d + 1))}
+                                    disabled={isAnalyzing}
+                                    className="w-6 h-6 flex items-center justify-center text-stone-400 hover:text-white hover:bg-stone-800 rounded transition-colors disabled:opacity-50"
+                                >+</button>
+                            </div>
                         </div>
-                        <div className="flex items-center bg-stone-950 rounded-lg border border-stone-800 p-1">
-                            <button 
-                                onClick={() => setSearchDepth(d => Math.max(1, d - 1))}
+
+                        {/* Time Control */}
+                        <div className="flex flex-col bg-stone-900 p-3 rounded-lg border border-stone-800">
+                             <span className="text-xs text-stone-400 font-medium flex items-center gap-1 mb-2"><Timer size={12}/> Max Time</span>
+                             <select 
+                                value={maxTime} 
+                                onChange={(e) => setMaxTime(Number(e.target.value))}
                                 disabled={isAnalyzing}
-                                className="w-8 h-6 flex items-center justify-center text-stone-400 hover:text-white hover:bg-stone-800 rounded transition-colors disabled:opacity-50"
-                            >-</button>
-                            <span className="w-8 text-center text-wwm-green font-mono font-bold text-sm">{searchDepth}</span>
-                            <button 
-                                onClick={() => setSearchDepth(d => Math.min(25, d + 1))}
-                                disabled={isAnalyzing}
-                                className="w-8 h-6 flex items-center justify-center text-stone-400 hover:text-white hover:bg-stone-800 rounded transition-colors disabled:opacity-50"
-                            >+</button>
+                                className="w-full bg-stone-950 text-stone-200 text-xs rounded-lg border border-stone-800 p-1.5 focus:outline-none focus:border-wwm-green"
+                             >
+                                <option value="1000">1s (Fast)</option>
+                                <option value="3000">3s (Balanced)</option>
+                                <option value="5000">5s (Deep)</option>
+                                <option value="10000">10s (Pro)</option>
+                                <option value="30000">30s (Max)</option>
+                                <option value="60000">60s (Ultra)</option>
+                             </select>
                         </div>
                      </div>
                  </div>
@@ -787,7 +808,7 @@ export const XiangqiBoard: React.FC = () => {
              {autoAnalyze && !winner && !setupMode && (
                  <div className="text-xs text-center mt-2 font-mono">
                      {isAnalyzing ? (
-                         <span className="text-wwm-green animate-pulse flex items-center justify-center gap-2"><Loader2 size={12} className="animate-spin"/> Thinking (Depth {searchDepth})...</span>
+                         <span className="text-wwm-green animate-pulse flex items-center justify-center gap-2"><Loader2 size={12} className="animate-spin"/> Thinking...</span>
                      ) : analysisError ? (
                          <span className="text-red-400 flex items-center justify-center gap-2"><AlertCircle size={12}/> Analysis failed. Retrying...</span>
                      ) : turn === PieceColor.BLACK ? (
@@ -851,7 +872,7 @@ export const XiangqiBoard: React.FC = () => {
                         <div className="h-40 flex flex-col items-center justify-center text-stone-500 space-y-3">
                             <Loader2 className="animate-spin text-wwm-green" size={32} />
                             <p className="text-sm font-medium">Wukong is calculating (Depth {searchDepth})...</p>
-                            {searchDepth > 12 && <p className="text-xs text-yellow-500/80">High depth may take longer</p>}
+                            <p className="text-xs text-yellow-500/80">Max Time: {maxTime/1000}s</p>
                         </div>
                     ) : analysisResult ? (
                         <div className="bg-stone-900/80 p-5 rounded-xl border border-stone-800 animate-in fade-in slide-in-from-bottom-2">
@@ -910,7 +931,7 @@ export const XiangqiBoard: React.FC = () => {
                             className="w-full py-4 bg-gradient-to-r from-emerald-700 to-wwm-green hover:from-emerald-600 hover:to-wwm-green text-white font-bold rounded-xl transition-all shadow-lg hover:shadow-emerald-900/20 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
                         >
                             {isAnalyzing ? <Loader2 className="animate-spin" /> : <Zap className="group-hover:text-emerald-100 transition-colors" />}
-                            {analysisError ? "Retry Analysis" : `Analyze Position (Depth ${searchDepth})`}
+                            {analysisError ? "Retry Analysis" : `Analyze (Depth ${searchDepth}, ${maxTime/1000}s)`}
                         </button>
                     )}
                 </div>
